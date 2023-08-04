@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb0bf4194af002418af6c615322958d, type: 3}
-  m_Name: Food
+  m_Name: EggRice
   m_EditorClassIdentifier: 
-  ingredients: []
-  Icon: {fileID: 0}
-  Name: 
+  _ingredients:
+  - {fileID: 11400000, guid: 2e52251213cac82448d355c15717e337, type: 2}
+  - {fileID: 11400000, guid: a54eff5cf86bf074c80e3e4716117a86, type: 2}
+  _icon: {fileID: 0}
+  _name: EggRice
