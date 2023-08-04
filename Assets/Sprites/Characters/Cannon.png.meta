@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4766d3cc7f1744e4f902b7370200c85d
+guid: 63090d34abc7e435894a76e85f4d7b4c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fukidashi_0
+      name: Cannon_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 177a666d99e5848eb9165c00556af0e4
-      internalID: -1758900650
+      spriteID: 3eabe07fb7313406a96971a679d21e34
+      internalID: -888305847
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fukidashi_1
+      name: Cannon_1
       rect:
         serializedVersion: 2
         x: 32
@@ -158,29 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e66d4524ca4274b98842286730e0b36b
-      internalID: -1433684943
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fukidashi_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c03d4f3ec1e44441b53a569768516fe
-      internalID: -835198255
+      spriteID: 050043aa676684966ba2eebab7dba26d
+      internalID: -1094827837
       vertices: []
       indices: 
       edges: []
@@ -196,9 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Fukidashi_0: -1758900650
-      Fukidashi_1: -1433684943
-      Fukidashi_2: -835198255
+      Cannon_0: -888305847
+      Cannon_1: -1094827837
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -41,3 +41,30 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Back
+    uniqueID: 4029459467
+    locked: 0
+  - name: Floor
+    uniqueID: 1983457293
+    locked: 0
+  - name: Character
+    uniqueID: 3232701079
+    locked: 0
+  - name: Table
+    uniqueID: 3208484761
+    locked: 0
+  - name: Bullet
+    uniqueID: 1178910695
+    locked: 0
+  - name: Cannon
+    uniqueID: 3709684647
+    locked: 0
+  - name: Particle
+    uniqueID: 3857979739
+    locked: 0
+  - name: UI
+    uniqueID: 1395824555
+    locked: 0
+  - name: Result
+    uniqueID: 625584533
+    locked: 0
