@@ -16,10 +16,10 @@ namespace Game
             return _settings.foods[rnd];
         }
 
-        public Ingredient[] GetIngredients()
-        {
+        //public Ingredient[] GetIngredients()
+        //{
 
-        }
+        //}
 
         public List<Food> GetCandidateFoods(List<Ingredient> items)
         {
@@ -40,16 +40,16 @@ namespace Game
             return candidateFoods;
         }
 
-        public List<Ingredient> GetCandidateIngredients(List<Ingredient> items)
-        {
+        //public List<Ingredient> GetCandidateIngredients(List<Ingredient> items)
+        //{
 
-        }
+        //}
 
-        public bool TryGetCreatableFood(List<Ingredient> items, out Food food)
-        {
-            //items‚ğó‚¯æ‚Á‚Äì¬‰Â”\‚Èfood‚ğ•Ô‚·
+        //public bool TryGetCreatableFood(List<Ingredient> items, out Food food)
+        //{
+        //    //items‚ğó‚¯æ‚Á‚Äì¬‰Â”\‚Èfood‚ğ•Ô‚·
 
-        }
+        //}
     }
 }
 
