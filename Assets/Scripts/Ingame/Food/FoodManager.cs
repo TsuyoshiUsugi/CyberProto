@@ -3,34 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodManager : MonoBehaviour
+namespace Game
 {
-    //LevelSettings _settings;
+    public class FoodManager : MonoBehaviour
+    {
+        [SerializeField] LevelSettings _settings;
 
-    //public Food GetRandomFood()
-    //{
-    //    //SettingからFoodを取得してランダムに取得可能な食事を返す
-    //    int rnd = Random.Range(0, _settings.Food.);
-    //    return;
-    //}
+        public Food GetRandomFood()
+        {
+            //SettingからFoodを取得してランダムに取得可能な食事を返す
+            int rnd = UnityEngine.Random.Range(0, _settings.foods.Length);
+            return _settings.foods[rnd];
+        }
 
-    //public Ingredient[] GetIngredients()
-    //{
+        public Ingredient[] GetIngredients()
+        {
 
-    //}
+        }
 
-    ///// <summary>
-    ///// 作成可能な料理の候補を受け取る
-    ///// </summary>
-    ///// <param name="items"></param>
-    ///// <returns></returns>
-    //public Food[] GetCandidateFoods(Span<Ingredient> items)
-    //{
-    //    //
-    //}
+        public List<Food> GetCandidateFoods(List<Ingredient> items)
+        {
+            List<Food> candidateFoods = new();
+            //各料理を見て、作れそうなものを返す
+            foreach (var food in _settings.foods)
+            {
+                var ingredientNum = food.Ingredients.Length;
+                var currentMatchNum = 0;
+                for (int i = 0; i < food.Ingredients.Length; i++)
+                {
+                    if (items.Contains(food.Ingredients[i])) currentMatchNum++;
+                }
 
-    //public bool TryGetCreatableFood(Span<Ingredient> items, out Food food)
-    //{
-    //    //itemsを受け取って作成可能なfoodを返す
-    //}
+                if (ingredientNum == currentMatchNum) candidateFoods.Add(food);
+            }
+
+            return candidateFoods;
+        }
+
+        public List<Ingredient> GetCandidateIngredients(List<Ingredient> items)
+        {
+
+        }
+
+        public bool TryGetCreatableFood(List<Ingredient> items, out Food food)
+        {
+            //itemsを受け取って作成可能なfoodを返す
+
+        }
+    }
 }
+
