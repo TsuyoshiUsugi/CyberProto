@@ -17,7 +17,11 @@ namespace Game
             throw new NotImplementedException();
         }
 
-        public void SetActiveIngredients(Ingredient[] ingredients)
+        /// <summary>
+        /// 選択した材料を選択可能にする
+        /// </summary>
+        /// <param name="ingredients"></param>
+        public void SetActiveIngredients(List<Ingredient> ingredients)
         {
             // UI Animation
         }
@@ -26,7 +30,7 @@ namespace Game
         /// 選択した材料を大砲に入れるアニメーションを再生する
         /// </summary>
         /// <param name="ingredients"></param>
-        public void UseIngredients(Ingredient[] ingredients)
+        public void UseIngredients(List<Ingredient> ingredients)
         {
             // UI Animation
         }
