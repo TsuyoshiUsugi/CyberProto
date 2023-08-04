@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Food")]
-public class Food : ScriptableObject
+namespace Game
 {
-    public Ingredient[] ingredients;
-    public Sprite Icon;
-    public string Name;
+    [CreateAssetMenu(fileName = "Food")]
+    public class Food : ScriptableObject
+    {
+        [SerializeField] Ingredient[] _ingredients;
+        [SerializeField] Sprite _icon;
+        [SerializeField] string _name;
+
+        public Ingredient[] Ingredients => _ingredients;
+        public Sprite Icon => _icon;
+        public string Name => _name;
+    }
 }
