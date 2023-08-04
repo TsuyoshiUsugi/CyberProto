@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class StageSelectModel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameContext _gameContext; 
 
-    // Update is called once per frame
-    void Update()
+    public void SelectStage(LevelSettings loadLevel)
     {
-        
+        _gameContext.levelSettings = loadLevel;
     }
 }
