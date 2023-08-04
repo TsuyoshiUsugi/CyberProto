@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
-public class TitlePresenter : MonoBehaviour
+namespace Title
 {
-    // Start is called before the first frame update
-    void Start()
+    public class TitlePresenter : MonoBehaviour
     {
-        
-    }
+        [SerializeField] TitleManager _titleManager;
+        [SerializeField] TitleView _titleView;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            _titleView.StartButtonClicked.Subscribe(_ => _titleManager.MoveToStageSelect()).AddTo(this);
+            _titleView.QuitButtonClicked.Subscribe(_ => _titleManager.QuitGame()).AddTo(this);
+        }
     }
 }

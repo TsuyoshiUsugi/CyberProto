@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class TitleManager : MonoBehaviour
+namespace Title
 {
-    // Start is called before the first frame update
-    void Start()
+    public class TitleManager : MonoBehaviour
     {
-        
+        [SerializeField] string _stageSelectSceneName = "";
+
+        public void MoveToStageSelect()
+        {
+            SceneManager.LoadScene(_stageSelectSceneName);
+        }
+
+        public void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();//ゲームプレイ終了
+#endif
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
+    
