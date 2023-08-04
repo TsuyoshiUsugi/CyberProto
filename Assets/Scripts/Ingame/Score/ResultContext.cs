@@ -1,18 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResultContext : MonoBehaviour
+namespace Game
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(fileName = "ResultContext")]
+    public class ResultContext : ScriptableObject
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public int _score;
+        public int _orderCompleteNum;
+        public int _populality;
     }
 }
