@@ -97,7 +97,8 @@ namespace Game
 
             foreach (var candidatefood in _settings.foods)
             {
-                if (candidatefood.Ingredients.Length != items.Count) continue;
+                if (candidatefood.Ingredients.Length > items.Count) continue;
+
                 var maxIngredientNum = candidatefood.Ingredients.Length;
                 var currentMatchNum = 0;
 
