@@ -45,9 +45,9 @@ namespace Game
                         var screenDir = _releasedCoodination - _clickedCoodination;
                         var direction = ConvertBulletDirection(screenDir);
                         _cannon.Fire(direction);
-                        // transform.Translate(direction.x, direction.y, 0);
+                        Debug.Log(direction);
+                         transform.Translate(direction.x, direction.y, 0);
                     }
-
                     _mouseHold = false;
                 });
         }
@@ -69,8 +69,8 @@ namespace Game
         /// <returns></returns>
         private Vector2 ConvertBulletDirection(Vector2 dir)
         {
-            // TODO: 要調整
-            return dir * -0.01f;
+            // TODO: 要調整(Lerpしてもいいかも)
+            return dir * -0.0001f;
         }
     }
 }

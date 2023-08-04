@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,14 @@ namespace Game
     public class Cannon : MonoBehaviour
     {
         public Food CurrentFood { get; private set; }
+
+        public Subject<Unit> Fired { get; } = new Subject<Unit>();
         public Subject<List<Ingredient>> FoodChanged { get; } = new Subject<List<Ingredient>>();
-        [SerializeField] private Bullet _bullet;
+        [SerializeField] private GameObject _bulletPrefab;
+        
 
         /// <summary>
-        /// H‚×•¨‚ğ‘å–C‚ÉƒZƒbƒg‚·‚é
+        /// é£Ÿã¹ç‰©ã‚’å¤§ç ²ã«ã‚»ãƒƒãƒˆã™ã‚‹
         /// </summary>
         /// <param name="food"></param>
         public void SetFood(Food food)
@@ -23,25 +26,25 @@ namespace Game
             CurrentFood = food;
         }
 
-
         /// <summary>
-        /// H‚×•¨‚ğ”­Ë‚·‚é
+        /// é£Ÿã¹ç‰©ã‚’ç™ºå°„ã™ã‚‹
         /// </summary>
         /// <param name="bulletVector"></param>
         /// <exception cref="NotImplementedException"></exception>
         public void Fire(Vector2 bulletVector)
         {
-            if (!HasFood()) throw new NullReferenceException("CurrentFood‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
-            // var bulletObject = Instantiate(_bulletPrefab);
-            // var bullet = bulletObject.GetComponent<Bullet>();
-            _bullet.Direction = bulletVector;
-            
-            // ŒŸ“¢
+            //if (!HasFood()) throw new NullReferenceException("CurrentFoodãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
+            var bulletObject = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+            var bullet = bulletObject.GetComponent<Bullet>();
+            bullet.Direction = bulletVector;
+            bullet.Food = CurrentFood;
+            // æ¤œè¨
             SetFood(null);
+            Fired.OnNext(Unit.Default);
         }
         
         /// <summary>
-        /// ‘å–C‚ÉH–‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©
+        /// å¤§ç ²ã«é£Ÿäº‹ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹
         /// </summary>
         /// <returns></returns>
         public bool HasFood()
@@ -54,7 +57,7 @@ namespace Game
         }
 
         /// <summary>
-        /// next‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚ªAprevious‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚È‚¢Ş—¿‚ğ•Ô‚·
+        /// nextã«å«ã¾ã‚Œã¦ã„ã‚‹ãŒã€previousã«å«ã¾ã‚Œã¦ã„ãªã„ææ–™ã‚’è¿”ã™
         /// </summary>
         /// <param name="previous"></param>
         /// <param name="next"></param>

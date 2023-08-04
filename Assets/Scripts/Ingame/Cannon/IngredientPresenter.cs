@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game;
@@ -12,28 +12,28 @@ namespace Game
         [SerializeField] private IngredientView _ingredientView;
         [SerializeField] private Cannon _Cannon;
         [SerializeField] private IngredientSelector _ingredientSelector;
-        
+
         void Start()
         {
             // view to model
             
-            // �ޗ����N���b�N���ꂽ�Ƃ�
+            // 材料がクリックされたとき
             _ingredientView.IngredientClicked.Subscribe(ingredient =>
             {
                 _ingredientSelector.AddIngredient(ingredient);
             }).AddTo(this);
             
             
-            
             // model to view
             
-            // ��C�ɒǉ��\�ȍޗ��̌�₪�ω������Ƃ�
+            // 大砲に追加可能な材料の候補が変化したとき
             _ingredientSelector.CandidateChanged.Subscribe(ingredients =>
             {
                 _ingredientView.SetActiveIngredients(ingredients);
             }).AddTo(this);
 
-            // 
+
+            // 大砲に素材が追加されるときのアニメーション 
             _Cannon.FoodChanged.Subscribe(ingredients =>
             {
                 _ingredientView.UseIngredients(ingredients);

@@ -5,18 +5,22 @@ using UniRx.Triggers;
 using UniRx;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
-{
-    public Vector2 Direction { get; set; }
-    public float Speed { get; set; }
 
-    private void Start()
+namespace Game
+{
+    public class Bullet : MonoBehaviour
     {
-        this.UpdateAsObservable().Subscribe(_ =>
+        public Food Food { get; set; }
+        private const float lifeSpan = 10f;
+        public Vector2 Direction { get; set; }
+
+        private void Start()
         {
-            transform.Translate(Direction.x, Direction.y, 0);
-        });
+            this.UpdateAsObservable().Subscribe(_ =>
+            {
+                transform.Translate(Direction.x, Direction.y, 0);
+            });
+            Destroy(gameObject, lifeSpan);
+        }
     }
-    
-    // バレットにぶつかったとき何かしらする
 }
