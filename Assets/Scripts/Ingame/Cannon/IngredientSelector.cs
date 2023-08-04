@@ -11,10 +11,15 @@ namespace Game
         private List<Ingredient> _selecting = new List<Ingredient>();
         public ReactiveCollection<Ingredient> Canditates { get; } = new ReactiveCollection<Ingredient>();
         public Subject<Unit> CandidateChanged { get; } = new Subject<Unit>();
-
-        public void AddIngredient(Ingredient ingrediente)
+        public void AddIngredient(Ingredient ingredient)
         {
-            throw new NotImplementedException();
+            _selecting.Add(ingredient);
+            // var foods = FoodManager.GetCandidateFoods(_selecting)
+            
         }
+        
+        // private CalculateArailable
+        
+        
     }
 }

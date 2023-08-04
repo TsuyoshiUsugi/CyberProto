@@ -9,14 +9,20 @@ namespace Game
     public class Cannon : MonoBehaviour
     {
         // SetFood
-        public Food CurrentFood { get; set; }
+        public Food CurrentFood { get; set; }    
+        [SerializeField] private GameObject _bulletPrefab;
 
-        void Fire(Vector2 vec)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vec"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void Fire(Vector2 vec)
         {
             throw new NotImplementedException();
         }
         
-        bool HasFood()
+        public bool HasFood()
         {
             if (CurrentFood == null)
             {

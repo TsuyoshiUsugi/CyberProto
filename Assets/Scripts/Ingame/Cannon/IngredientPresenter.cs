@@ -10,7 +10,7 @@ namespace game
     public class IngredientPresenter : MonoBehaviour
     {
         [SerializeField] private IngredientView _ingredientView;
-        [SerializeField] private Cannon _cannon;
+        [SerializeField] private Cannon _Cannon;
         [SerializeField] private IngredientSelector _ingredientSelector;
         
         void Start()
