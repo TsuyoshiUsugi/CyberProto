@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSettings : MonoBehaviour
+[CreateAssetMenu]
+public class LevelSettings : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int clearScore;
+    public Food[] foods;
+    public SpawnCycle[] normalCycles;
+    public SpawnCycle[] rushCycles;
+    public float rushStartTime;
+    public float rushEndTime;
 }
