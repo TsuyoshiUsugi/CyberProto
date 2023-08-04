@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace Game
     public class IngredientView : MonoBehaviour
     {
         [SerializeField]
-        private List<IngredientButton> _ingredientButtonDictionary;
+        private List<UnionIngredientUI> _ingredientButtonDictionary;
+
+        [SerializeField]
+        private Transform _cannonTrans;
 
         private List<Ingredient> _availableIngredients = new List<Ingredient>();
         public Subject<Ingredient> IngredientClicked { get; set; } = new Subject<Ingredient>();
-
         public void ResetState()
         {
             throw new NotImplementedException();
@@ -35,7 +38,7 @@ namespace Game
 
             foreach (var ingredient in ingredients)
             {
-                var c = GetIngredientButton(ingredient);
+                var c = GetIngredientUI(ingredient);
                 c.Button.enabled = true;
                 c.Image.color = new Color(1, 1, 1, 1);
             }
@@ -47,14 +50,19 @@ namespace Game
         /// <param name="ingredients"></param>
         public void UseIngredients(List<Ingredient> ingredients)
         {
-            // UI Animation
+            foreach (var i in ingredients)
+            {
+                var ui = GetIngredientUI(i);
+
+                ui.Image.transform.DOMove(_cannonTrans.position, 0.5f);
+            }
         }
 
         private Button GetButton(Ingredient ingredient)
         {
             return _ingredientButtonDictionary.First(x => x.Ingredient.Id == ingredient.Id).Button;
         }
-        private IngredientButton GetIngredientButton(Ingredient ingredient)
+        private UnionIngredientUI GetIngredientUI(Ingredient ingredient)
         {
             return _ingredientButtonDictionary.First(x => x.Ingredient.Id == ingredient.Id);
         }
@@ -63,10 +71,13 @@ namespace Game
     
 
     [System.Serializable]
-    public struct IngredientButton
+    public struct UnionIngredientUI
     {
+        [SerializeField]
         private Button _button;
+        [SerializeField]
         private Image _image;
+        [SerializeField]
         private Ingredient _ingredient;
 
         public Button Button { get { return _button; } }
