@@ -1,18 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
-public class IngredientSelector : MonoBehaviour
+namespace Game
 {
-    // Start is called before the first frame update
-    void Start()
+    public class IngredientSelector : MonoBehaviour
     {
-        
-    }
+        public List<Ingredient> Selecting { get; set; }
+        public ReactiveCollection<Ingredient> Canditates { get; } = new ReactiveCollection<Ingredient>();
+        public Subject<Unit> CandidateChanged { get; } = new Subject<Unit>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void AddIngredient(Ingredient ingrediente)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,15 +8,24 @@ namespace Game
 {
     public class Cannon : MonoBehaviour
     {
-        // private List<Ingredient> _Selecting;
-        public List<Ingredient> Selecting { get; set; }
-        public ReactiveCollection<Ingredient> Canditates { get; } = new ReactiveCollection<Ingredient>();
-        public Subject<Unit> CandidateChanged { get; } = new Subject<Unit>();
+        // SetFood
+        public Food CurrentFood { get; set; }
 
-        void AddIngredient(Ingredient ingrediente)
+        void Fire(Vector2 vec)
         {
             throw new NotImplementedException();
         }
+        
+        bool HasFood()
+        {
+            if (CurrentFood == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public Subject<(Food, Food)> FoodChanged { get; set; } = new Subject<(Food, Food)>();
     }
 }
 
