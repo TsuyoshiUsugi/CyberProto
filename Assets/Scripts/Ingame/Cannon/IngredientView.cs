@@ -27,7 +27,18 @@ namespace Game
         /// <param name="ingredients"></param>
         public void SetActiveIngredients(List<Ingredient> ingredients)
         {
-            
+            foreach (var ingredientButton in _ingredientButtonDictionary)
+            {
+                ingredientButton.Button.enabled = false;
+                ingredientButton.Image.color = Color.gray;
+            }
+
+            foreach (var ingredient in ingredients)
+            {
+                var c = GetIngredientButton(ingredient);
+                c.Button.enabled = true;
+                c.Image.color = new Color(1, 1, 1, 1);
+            }
         }
 
         /// <summary>
@@ -43,6 +54,10 @@ namespace Game
         {
             return _ingredientButtonDictionary.First(x => x.Ingredient.Id == ingredient.Id).Button;
         }
+        private IngredientButton GetIngredientButton(Ingredient ingredient)
+        {
+            return _ingredientButtonDictionary.First(x => x.Ingredient.Id == ingredient.Id);
+        }
     }
 
     
@@ -51,9 +66,11 @@ namespace Game
     public struct IngredientButton
     {
         private Button _button;
+        private Image _image;
         private Ingredient _ingredient;
 
         public Button Button { get { return _button; } }
+        public Image Image { get { return _image; } }
         public Ingredient Ingredient { get { return _ingredient; } }
     }
 }
