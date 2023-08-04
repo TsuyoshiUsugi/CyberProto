@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
-public class StageSelectPresenter : MonoBehaviour
+namespace StageSelect
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StageSelectPresenter : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] StageSelectView _stageSelectView;
+        [SerializeField] StageSelectModel _stageSelectModel;
+        // Start is called before the first frame update
+        void Start()
+        {
+            _stageSelectView.StageSelect.Subscribe(loadStageSettings => _stageSelectModel.SelectStage(loadStageSettings));
+        }
     }
 }
