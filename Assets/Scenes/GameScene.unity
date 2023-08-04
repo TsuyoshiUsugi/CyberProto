@@ -2710,8 +2710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d3e30f532905545991a55d6b6fc26b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testIngredients:
-  - {fileID: 11400000, guid: 7a7f8f77e6016364bbfb87dbd69b44cb, type: 2}
   _ingredientButtonDictionary:
   - _button: {fileID: 959330632}
     _image: {fileID: 1510066130}
