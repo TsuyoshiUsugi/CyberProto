@@ -10,7 +10,7 @@ namespace Game
     public class Cannon : MonoBehaviour
     {
         public Food CurrentFood { get; private set; }
-        public Subject<List<Ingredient>> FoodChanged { get; set; } = new Subject<List<Ingredient>>();
+        public Subject<List<Ingredient>> FoodChanged { get; } = new Subject<List<Ingredient>>();
         [SerializeField] private Bullet _bullet;
 
         /// <summary>
