@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,12 +11,16 @@ namespace StageSelect
         [SerializeField] List<Button> _stageSelectButtons;
 
         public Subject<LevelSettings> StageSelect = new();
+
         // Start is called before the first frame update
         void Start()
         {
-            for (int i = 0; i < _stageSelectButtons.Count; i++)
+            int index = 0;
+            foreach (var button in _stageSelectButtons)
             {
-                _stageSelectButtons[i].onClick.AddListener(() => StageSelect.OnNext(_avairableStages.LevelSettings[i]));
+                int inx = index;
+                button.onClick.AddListener(() => StageSelect.OnNext(_avairableStages.LevelSettings[inx]));
+                index++;
             }
         }
     }
