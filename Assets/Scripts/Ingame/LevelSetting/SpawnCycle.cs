@@ -8,5 +8,6 @@ namespace Game
     {
         public float span;
         public Customer customerPrefab;
+        public int initOffset;
     }
 }
