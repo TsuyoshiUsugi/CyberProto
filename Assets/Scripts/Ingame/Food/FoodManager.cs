@@ -25,6 +25,7 @@ namespace Game
             {
                 foreach (var ingredient in food.Ingredients)
                 {
+                    if (ingredients.Contains(ingredient)) continue;
                     ingredients.Add(ingredient);
                 }
             }
@@ -59,23 +60,66 @@ namespace Game
         {
             List<Ingredient> selectableIngredient = new();
 
-            var creatableFoods = GetCandidateFoods(items);   //Itemで作れるFoodがかえって来る
+            List<Food> creatableFoods = new();   //Itemで作れるFoodがかえって来る
+
+            foreach (var ingredient in items)
+            {
+                foreach (var food in _settings.foods)
+                {
+                    if (food.Ingredients.Contains(ingredient))
+                    {
+                        if (!creatableFoods.Contains(food)) creatableFoods.Add(food);
+                    }
+                }
+            }
+
             //cratableの食材を全て返す
             foreach (var food in creatableFoods)
             {
                 foreach (var ingredient in food.Ingredients)
                 {
-                    selectableIngredient.Add(ingredient);
+                    if (!selectableIngredient.Contains(ingredient)) selectableIngredient.Add(ingredient);
                 }
             }
 
             return selectableIngredient;
         }
 
+        /// <summary>
+        /// 引き数に与えられた食材たちとマッチするFoodがある場合返す
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="food"></param>
+        /// <returns></returns>
         public bool TryGetCreatableFood(List<Ingredient> items, out Food food)
         {
-            //itemsを受け取って作成可能なfoodを返す
-            food = GetCandidateFoods(items)[0];
+            food = null;
+
+            foreach (var candidatefood in _settings.foods)
+            {
+                var maxIngredientNum = candidatefood.Ingredients.Length;
+                var currentMatchNum = 0;
+
+                foreach (var ingredient in candidatefood.Ingredients)
+                {
+                    if (items.Contains(ingredient)) currentMatchNum++;
+                }
+
+                if (currentMatchNum == maxIngredientNum)    //Foodを作るのに必要な素材ぶん素材が入ってたら
+                {
+                    if (!food) food = candidatefood;
+
+                    if (food.Ingredients.Length == candidatefood.Ingredients.Length && food != candidatefood)
+                    {
+                        Debug.LogError("引き数の素材で作れる組み合わせが複数あります");
+                        Debug.Log(food.Name);
+                        Debug.Log(candidatefood.Name);
+                    }
+                    else if (food.Ingredients.Length < candidatefood.Ingredients.Length) food = candidatefood;
+                }
+            }
+
+
             if (food)
             {
                 return true;
@@ -84,6 +128,7 @@ namespace Game
             {
                 return false;
             }
+            
         }
     }
 }
