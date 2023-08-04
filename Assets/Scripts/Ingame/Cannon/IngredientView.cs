@@ -27,7 +27,7 @@ namespace Game
         /// <param name="ingredients"></param>
         public void SetActiveIngredients(List<Ingredient> ingredients)
         {
-            // UI Animation
+            
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace Game
         private Button _button;
         private Ingredient _ingredient;
 
-        public Button Button { get; }
-        public Ingredient Ingredient { get; }
+        public Button Button { get { return _button; } }
+        public Ingredient Ingredient { get { return _ingredient; } }
     }
 }
 
