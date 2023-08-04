@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ICustomer : MonoBehaviour
+namespace Game
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface ICustomer
     {
-        
+        bool IsContains(Food food);
+
+        void OnProvide(Food food);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
