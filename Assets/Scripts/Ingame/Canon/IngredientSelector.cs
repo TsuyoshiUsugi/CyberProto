@@ -8,11 +8,11 @@ namespace Game
 {
     public class IngredientSelector : MonoBehaviour
     {
-        public List<Ingredient> Selecting { get; set; }
+        private List<Ingredient> _selecting = new List<Ingredient>();
         public ReactiveCollection<Ingredient> Canditates { get; } = new ReactiveCollection<Ingredient>();
         public Subject<Unit> CandidateChanged { get; } = new Subject<Unit>();
 
-        void AddIngredient(Ingredient ingrediente)
+        public void AddIngredient(Ingredient ingrediente)
         {
             throw new NotImplementedException();
         }

@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx.Triggers;
+using UniRx;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Vector2 Direction { get; set; }
+    public float Speed { get; set; }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        this.UpdateAsObservable().Subscribe(_ =>
+        {
+            transform.Translate(Direction.x, Direction.y, 0);
+        });
     }
+    
+    // バレットにぶつかったとき何かしらする
 }
