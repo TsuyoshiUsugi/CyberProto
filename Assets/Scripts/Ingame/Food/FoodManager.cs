@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class FoodManager : MonoBehaviour
+    public class FoodManager : MonoBehaviour, IFoodContainer
     {
         [SerializeField] LevelSettings _settings;
 
