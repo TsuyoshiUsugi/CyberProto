@@ -5,7 +5,7 @@ using Game;
 using UnityEngine;
 using UniRx;
 
-namespace game
+namespace Game
 {
     public class IngredientPresenter : MonoBehaviour
     {
