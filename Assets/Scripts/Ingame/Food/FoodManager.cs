@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,19 @@ namespace Game
             return _settings.foods[rnd];
         }
 
-        //public Ingredient[] GetIngredients()
-        //{
+        public List<Ingredient> GetIngredients()
+        {
+            List<Ingredient> ingredients = new();
 
-        //}
+            foreach (var food in _settings.foods)
+            {
+                foreach (var ingredient in food.Ingredients)
+                {
+                    ingredients.Add(ingredient);
+                }
+            }
+            return ingredients;
+        }
 
         public List<Food> GetCandidateFoods(List<Ingredient> items)
         {
@@ -40,16 +50,41 @@ namespace Game
             return candidateFoods;
         }
 
-        //public List<Ingredient> GetCandidateIngredients(List<Ingredient> items)
-        //{
+        /// <summary>
+        /// Ingredientを選んだ時に次に選択可能な素材のリストを返す
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public List<Ingredient> GetCandidateIngredients(List<Ingredient> items)
+        {
+            List<Ingredient> selectableIngredient = new();
 
-        //}
+            var creatableFoods = GetCandidateFoods(items);   //Itemで作れるFoodがかえって来る
+            //cratableの食材を全て返す
+            foreach (var food in creatableFoods)
+            {
+                foreach (var ingredient in food.Ingredients)
+                {
+                    selectableIngredient.Add(ingredient);
+                }
+            }
 
-        //public bool TryGetCreatableFood(List<Ingredient> items, out Food food)
-        //{
-        //    //itemsを受け取って作成可能なfoodを返す
+            return selectableIngredient;
+        }
 
-        //}
+        public bool TryGetCreatableFood(List<Ingredient> items, out Food food)
+        {
+            //itemsを受け取って作成可能なfoodを返す
+            food = GetCandidateFoods(items)[0];
+            if (food)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 
