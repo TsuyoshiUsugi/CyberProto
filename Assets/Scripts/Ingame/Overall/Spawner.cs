@@ -35,6 +35,16 @@ namespace Game
 
         // あとでタイマークラスと置き換える
         private FloatReactiveProperty timer = new FloatReactiveProperty();
+        private bool isSpawnActive = false;
+
+        public void StartSpawn()
+        {
+            isSpawnActive = true;
+        }
+        public void StopSpawn()
+        {
+            isSpawnActive = false;
+        }
 
         void Start()
         {
@@ -45,7 +55,9 @@ namespace Game
             SetUsing(levelSettings.normalCycles, normalModeTimers);
             state = 0;
 
-            timer.Subscribe(CycleChanger);
+            IGameDirector gameDirection = ServiceLocator.Instance.Resolve<IGameDirector>();
+
+            gameDirection.GameTimer.Subscribe(CycleChanger);
 
             _popularityManager.PopularityScore
                 .Select(f => Mathf.CeilToInt(f))
@@ -53,6 +65,13 @@ namespace Game
                 .Subscribe(popularity =>
                 {
                     timerScale = 1.0f + (popularity - 3) * timerScaleDiff;
+                });
+
+            gameDirection.State
+                .Subscribe(state =>
+                {
+                    if (state == GameState.Play) StartSpawn();
+                    else StopSpawn();
                 });
         }
 
@@ -80,11 +99,14 @@ namespace Game
 
         private void Update()
         {
-            timer.Value += Time.deltaTime * timerScale;
+            if (!isSpawnActive) return;
+
+            timer.Value += Time.deltaTime;
 
             for (int i = 0; i < usingCycles.Length; i++)
             {
-                usingTimers[i] += Time.deltaTime;
+                usingTimers[i] += Time.deltaTime * timerScale;
+
                 if (usingCycles[i].span <= usingTimers[i])
                 {
                     var customer = Instantiate(usingCycles[i].customerPrefab, _spawnPoint, Quaternion.identity);
