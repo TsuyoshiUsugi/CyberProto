@@ -13,7 +13,7 @@ namespace Game
         [SerializeField] private Cannon _Cannon;
         [SerializeField] private IngredientSelector _ingredientSelector;
 
-        void Start()
+        void Awake()
         {
             // view to model
             
@@ -32,7 +32,6 @@ namespace Game
                 _ingredientView.SetActiveIngredients(ingredients, _ingredientSelector.Selecting);
             }).AddTo(this);
 
-            _ingredientView.SetActiveIngredients(_ingredientSelector.Canditates, _ingredientSelector.Selecting);
 
             // 大砲に素材が追加されるときのアニメーション 
             _Cannon.FoodChanged.Subscribe(ingredients =>
@@ -44,6 +43,12 @@ namespace Game
                 _ingredientView.ResetIngredientView();
                 _ingredientView.SetActiveIngredients(_ingredientSelector.Canditates, _ingredientSelector.Selecting);
             }).AddTo(this);
+        }
+
+        private void Start()
+        {
+            _ingredientView.SetActiveIngredients(_ingredientSelector.Canditates, _ingredientSelector.Selecting);
+
         }
     }
 }
