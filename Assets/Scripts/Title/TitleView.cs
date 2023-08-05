@@ -19,6 +19,7 @@ namespace Title
     [SerializeField] GameObject _stageSelectObject;
     [SerializeField] Image _optionBack;
     [SerializeField] Image _stageSelectBack;
+    [SerializeField] AudioClip _buttonClip;
 
     public Subject<Unit> QuitButtonClicked = new Subject<Unit>();
 
@@ -30,7 +31,9 @@ namespace Title
 
       _openStageSelectButton.onClick.AddListener(() =>
       {
-        if (!_optionObject.activeSelf)
+          PlayButtonSe();
+
+          if (!_optionObject.activeSelf)
         {
           var seq = DOTween.Sequence()
                 .OnStart(() =>
@@ -45,7 +48,9 @@ namespace Title
 
       _quitStageSelectButton.onClick.AddListener(() =>
       {
-        if (!_optionObject.activeSelf)
+          PlayButtonSe();
+
+          if (!_optionObject.activeSelf)
         {
           var seq = DOTween.Sequence()
                 .Append(_stageSelectBack.transform.DOScale(0.0f, 0.1f).SetEase(Ease.InBack))
@@ -60,12 +65,16 @@ namespace Title
 
       _quitGameButton.onClick.AddListener(() =>
       {
-        if (!_optionObject.activeSelf)
+          PlayButtonSe();
+
+          if (!_optionObject.activeSelf)
           QuitButtonClicked.OnNext(Unit.Default);
       });
       _openOptionButton.onClick.AddListener(() =>
       {
-        var seq = DOTween.Sequence()
+          PlayButtonSe();
+
+          var seq = DOTween.Sequence()
               .OnStart(() =>
               {
                 _openStageSelectButton.enabled = false;
@@ -80,6 +89,7 @@ namespace Title
 
       _exitOptionButton.onClick.AddListener(() =>
       {
+          PlayButtonSe();
         var seq = DOTween.Sequence()
                 .Append(_optionBack.transform.DOScale(0.0f, 0.1f).SetEase(Ease.InBack))
                 .OnComplete(() =>
@@ -92,6 +102,11 @@ namespace Title
                 })
                 .Play();
       });
+    }
+    
+    private void PlayButtonSe()
+    {
+            ServiceLocator.Instance.Resolve<ISePlayer>().Play(_buttonClip);
     }
   }
 }

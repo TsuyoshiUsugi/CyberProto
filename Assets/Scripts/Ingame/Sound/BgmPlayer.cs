@@ -50,4 +50,13 @@ public class BgmPlayer : MonoBehaviour, IBgmPlayer
         _isFadingOut = false;
         _audioSource.volume = startVolume;
     }
+
+    private void Awake()
+    {
+        ServiceLocator.Instance.Register<IBgmPlayer>(this);
+    }
+    private void OnDestroy()
+    {
+        ServiceLocator.Instance.UnRegister<IBgmPlayer>(this);
+    }
 }

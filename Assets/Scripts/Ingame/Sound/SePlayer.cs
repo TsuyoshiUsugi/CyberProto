@@ -11,4 +11,12 @@ public class SePlayer : MonoBehaviour, ISePlayer
     {
         _audioSource.PlayOneShot(clip);
     }
+    private void Awake()
+    {
+        ServiceLocator.Instance.Register<ISePlayer>(this);
+    }
+    private void OnDestroy()
+    {
+        ServiceLocator.Instance.UnRegister<ISePlayer>(this);
+    }
 }
