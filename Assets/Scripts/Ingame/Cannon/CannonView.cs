@@ -50,7 +50,7 @@ namespace Game
         {
             _arrowRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
             _cannonRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
-            _lazerRectTransform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
+            _lazerRectTransform.rotation = Quaternion.Euler(0, 0, 180 + GetVectorDegree(vector));
             var scale = vector.magnitude * 0.001f;
             SetArrowScale(scale);
         }
