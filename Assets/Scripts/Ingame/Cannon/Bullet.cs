@@ -12,17 +12,33 @@ namespace Game
     {
         private SpriteRenderer _spriteRenderer;
         public Food Food { get; private set; }
-        private const float lifeSpan = 10f;
+        private const float LifeSpan = 10f;
         public Vector2 Direction { get; set; }
 
         private void Start()
         {
+            var collider = GetComponent<Collider2D>();
+
+            collider.OnTriggerEnter2DAsObservable()
+                .Subscribe(other =>
+                {
+                    var customer = other.GetComponent<ICustomer>();
+                    if(customer != null)
+                    {
+                        if (customer.IsContains(Food))
+                        {
+                            customer.OnProvide(Food);
+                            HitAnimation();
+                        }
+                    }
+                }).AddTo(this);
+
             _spriteRenderer = GetComponent<SpriteRenderer>();
             this.UpdateAsObservable().Subscribe(_ =>
             {
                 transform.Translate(Direction.x, Direction.y, 0);
             });
-            Destroy(gameObject, lifeSpan);
+            Destroy(gameObject, LifeSpan);
         }
 
         /// <summary>
@@ -33,6 +49,11 @@ namespace Game
         {
             Food = food;
             _spriteRenderer.sprite = food.Icon;
+        }
+
+        private void HitAnimation()
+        {
+            Destroy(gameObject);
         }
     }
 }
