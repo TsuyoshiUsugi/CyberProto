@@ -22,7 +22,7 @@ namespace Game {
                 .Where(_ => _cannonController.IsArrowActive.Value)
                 .Subscribe(_ =>
                 {
-                    _cannonView.SetDirectionAndScale(_cannonController.CurrentDirection);
+                    _cannonView.SetDirectionUI(_cannonController.CurrentDirection);
                 }).AddTo(this);
         }
     }
