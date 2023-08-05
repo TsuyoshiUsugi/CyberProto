@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx.Triggers;
@@ -25,6 +25,10 @@ namespace Game
             Destroy(gameObject, lifeSpan);
         }
 
+        /// <summary>
+        /// Spriteをセットする
+        /// </summary>
+        /// <param name="food"></param>
         public void SetFood(Food food)
         {
             Food = food;

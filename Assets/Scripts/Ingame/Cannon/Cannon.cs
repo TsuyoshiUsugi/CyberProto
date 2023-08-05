@@ -63,10 +63,16 @@ namespace Game
         /// <param name="next"></param>
         private List<Ingredient> CalculateFoodDifference(Food previous, Food next)
         {
+            if(next == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var diffs = new List<Ingredient>();
             foreach (var ingredient in next.Ingredients)
             {
-                if (previous.Ingredients.Any(preIngredient => preIngredient.Id == ingredient.Id))
+                if (previous == null) diffs.Add(ingredient);
+                else if(previous.Ingredients.Any(preIngredient => preIngredient.Id == ingredient.Id))
                 {
                     diffs.Add(ingredient);
                 }
