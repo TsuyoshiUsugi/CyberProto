@@ -12,4 +12,7 @@ public class LevelSettings : ScriptableObject
     public SpawnCycle[] rushCycles;
     public float rushStartTime;
     public float rushEndTime;
+    public int _rankSBorder;
+    public int _rankABorder;
+    public int _rankBBorder;
 }

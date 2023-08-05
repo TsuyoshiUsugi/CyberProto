@@ -8,7 +8,13 @@ namespace Game
 {
     public class FoodManager : MonoBehaviour, IFoodContainer
     {
-        [SerializeField] LevelSettings _settings;
+        LevelSettings _settings;
+        [SerializeField] GameContext _gameContext;
+
+        private void Start()
+        {
+            _settings = _gameContext.levelSettings;
+        }
 
         public Food GetRandomFood()
         {
