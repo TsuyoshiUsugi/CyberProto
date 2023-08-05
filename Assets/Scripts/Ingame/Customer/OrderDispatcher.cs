@@ -8,7 +8,7 @@ namespace Game
     public class OrderDispatcher : MonoBehaviour
     {
         [SerializeField]
-        Canvas canvas;
+        Transform _orderViewContainer;
 
         [SerializeField]
         OrderView orderViewPrefab;
@@ -22,7 +22,7 @@ namespace Game
             spawner.CustomerInstantiated
                 .Subscribe(customer =>
                 {
-                    var view = Instantiate(orderViewPrefab, canvas.transform);
+                    var view = Instantiate(orderViewPrefab, _orderViewContainer);
                     view.gameObject.SetActive(true);
                     presenter.Connect(customer, view);
                 });
