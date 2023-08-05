@@ -6,83 +6,91 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneTransition : MonoBehaviour,ISceneTransition
+public class SceneTransition : MonoBehaviour, ISceneTransition
 {
-    [SerializeField,Scene]
-    private string _nextSceneName;
-    [HorizontalLine(color: EColor.Red)]
-    [SerializeField]
-    private Image _animationImage;
-    [SerializeField]
-    private List<Sprite> _animationSprites;
-    [SerializeField]
-    private float _animationInterval = 0.1f;
+  [SerializeField, Scene]
+  private string _nextSceneName;
+  [HorizontalLine(color: EColor.Red)]
+  [SerializeField]
+  private Image _animationImage;
+  [SerializeField]
+  private List<Sprite> _animationSprites;
+  [SerializeField]
+  private float _animationInterval = 0.1f;
 
-    [HorizontalLine(color: EColor.Red)]
-    [SerializeField]
-    private Image _fadeImage;
-    [SerializeField]
-    private float _fadeTime = 0.5f;
-    private void Awake()
+  [HorizontalLine(color: EColor.Red)]
+  [SerializeField]
+  private Image _fadeImage;
+  [SerializeField]
+  private float _fadeTime = 0.5f;
+  [SerializeField]
+  private Material _transitionOut;
+
+  private void Awake()
+  {
+    ServiceLocator.Instance.Register<ISceneTransition>(this);
+  }
+
+  public void FadeOut()
+  {
+    StartCoroutine(FadeOutCoroutine(_nextSceneName));
+  }
+  public void FadeOut(string sceneName)
+  {
+    StartCoroutine(FadeOutCoroutine(sceneName));
+  }
+  private IEnumerator FadeOutCoroutine(string sceneName)
+  {
+    _fadeImage.enabled = true;
+    _fadeImage.material = _transitionOut;
+
+    AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+    asyncLoad.allowSceneActivation = false;
+
+
+    yield return ForAction01(_fadeTime, _transitionOut, t =>
     {
-        ServiceLocator.Instance.Register<ISceneTransition>(this);
-    }
+      _fadeImage.color = new Color(0, 0, 0, t);
+    });
 
-    public void FadeOut()
+    _animationImage.enabled = true;
+
+    while (!asyncLoad.isDone)
     {
-        StartCoroutine(FadeOutCoroutine(_nextSceneName));
+      yield return AnimationImage();
+      if (asyncLoad.progress >= 0.9f)
+      {
+        asyncLoad.allowSceneActivation = true;
+        break;
+      }
     }
-    public void FadeOut(string sceneName)
+  }
+  private IEnumerator AnimationImage()
+  {
+    foreach (var sprite in _animationSprites)
     {
-        StartCoroutine(FadeOutCoroutine(sceneName));
+      _animationImage.sprite = sprite;
+      yield return new WaitForSeconds(_animationInterval);
     }
-    private IEnumerator FadeOutCoroutine(string sceneName)
+  }
+
+  private IEnumerator ForAction01(float second, Material material, Action<float> action)
+  {
+    float time = 0;
+    material.SetColor("_Color", _fadeImage.color);
+    while (time < second)
     {
-        _fadeImage.enabled = true;
+      material.SetFloat("_Alpha", time / second);
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        asyncLoad.allowSceneActivation = false;
-
-
-        yield return ForAction01(_fadeTime, t =>
-        {
-            _fadeImage.color = new Color(0, 0, 0, t);
-        });
-
-        _animationImage.enabled = true;
-        
-        while (!asyncLoad.isDone)
-        {
-            yield return AnimationImage();
-            if (asyncLoad.progress >= 0.9f)
-            {
-                asyncLoad.allowSceneActivation = true;
-                break;
-            }
-        }
+      yield return new WaitForEndOfFrame();
+      time += Time.deltaTime;
+      //   action(time / second);
     }
-    private IEnumerator AnimationImage()
-    {
-        foreach (var sprite in _animationSprites)
-        {
-            _animationImage.sprite = sprite;
-            yield return new WaitForSeconds(_animationInterval);
-        }
-    }
+    material.SetFloat("_Alpha", 1);
+  }
 
-    private IEnumerator ForAction01(float second, Action<float> action)
-    {
-        float time = 0;
-        while (time < second)
-        {
-            yield return null;
-            time += Time.deltaTime;
-            action(time / second);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        ServiceLocator.Instance.UnRegister<ISceneTransition>(this);
-    }
+  private void OnDestroy()
+  {
+    ServiceLocator.Instance.UnRegister<ISceneTransition>(this);
+  }
 }

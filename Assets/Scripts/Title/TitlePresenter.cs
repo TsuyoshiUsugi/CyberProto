@@ -12,7 +12,6 @@ namespace Title
 
         private void Start()
         {
-            _titleView.StartButtonClicked.Subscribe(_ => _titleManager.MoveToStageSelect()).AddTo(this);
             _titleView.QuitButtonClicked.Subscribe(_ => _titleManager.QuitGame()).AddTo(this);
         }
     }
