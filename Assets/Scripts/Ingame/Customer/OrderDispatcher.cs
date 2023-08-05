@@ -8,9 +8,6 @@ namespace Game
     public class OrderDispatcher : MonoBehaviour
     {
         [SerializeField]
-        Spawner spawner;
-
-        [SerializeField]
         Canvas canvas;
 
         [SerializeField]
@@ -21,6 +18,7 @@ namespace Game
 
         private void Awake()
         {
+            var spawner = ServiceLocator.Instance.Resolve<ISpawner>();
             spawner.CustomerInstantiated
                 .Subscribe(customer =>
                 {

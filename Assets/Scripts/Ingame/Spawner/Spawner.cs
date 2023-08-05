@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Spawner : MonoBehaviour
+    public class Spawner : MonoBehaviour, ISpawner
     {
         [SerializeField]
         private GameContext _gameContext;
