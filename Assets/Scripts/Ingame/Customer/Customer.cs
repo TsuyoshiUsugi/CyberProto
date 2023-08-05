@@ -46,16 +46,31 @@ namespace Game
         }
     }
 
+    public enum ProvideTiming
+    {
+        Normal,
+        Fast,
+    }
+
+    public struct ProvideEvent
+    {
+        public Food Food;
+        public ProvideTiming Timing;
+    }
+
     public class Customer : MonoBehaviour, ICustomer
     {
         private Subject<Unit> _provideCompletedSubject = new Subject<Unit>();
-        public System.IObservable<Unit> ProvideCompleted => _provideCompletedSubject;
+        public IObservable<Unit> ProvideCompleted => _provideCompletedSubject;
 
         private ReactiveCollection<Order> _orders = new ReactiveCollection<Order>();
         public IReadOnlyReactiveCollection<Order> Orders => _orders;
 
-        private Subject<Unit> _orderProvidedSubject = new Subject<Unit>();
-        public IObservable<Unit> OrderProvided => _orderProvidedSubject;
+        private Subject<ProvideEvent> _orderProvidedSubject = new Subject<ProvideEvent>();
+        public IObservable<ProvideEvent> OrderProvided => _orderProvidedSubject;
+
+        private Subject<Unit> _notProvidedSubject = new Subject<Unit>();
+        public IObservable<Unit> NotProvided => _notProvidedSubject;
 
 
         [SerializeField]
@@ -64,8 +79,12 @@ namespace Game
 
         public int RequestCount => _requestCount;
 
+        private bool orderCompleted = false;
+
         public bool IsContains(Food food)
         {
+            if (orderCompleted) return false;
+
             var order = _orders.FirstOrDefault(order => order.Food == food && !order.IsProvided);
 
             return order.OrderNumber != -1;
@@ -73,24 +92,37 @@ namespace Game
 
         public void OnProvide(Food food)
         {
+            if (orderCompleted) return;
+
             var order = _orders.FirstOrDefault(order => order.Food == food && !order.IsProvided);
             if (order.OrderNumber == -1) return;
 
             order.IsProvided = true;
             _orders[order.OrderNumber] = order;
 
-            _orderProvidedSubject.OnNext(Unit.Default);
+            ProvideTiming timing = (transform.position.x < 0) ? ProvideTiming.Fast : ProvideTiming.Normal;
+
+            _orderProvidedSubject.OnNext(new ProvideEvent() { Food = food, Timing = timing});
 
             if (IsComplete())
             {
                 _provideCompletedSubject.OnNext(Unit.Default);
                 _provideCompletedSubject.OnCompleted();
+
+                orderCompleted = true;
             }
         }
 
         private bool IsComplete()
         {
             return _orders.All(order => order.IsProvided);
+        }
+
+        private void OnDestroy()
+        {
+            if (orderCompleted) return;
+            _notProvidedSubject.OnNext(Unit.Default);
+            _notProvidedSubject.OnCompleted();
         }
 
         void Start()

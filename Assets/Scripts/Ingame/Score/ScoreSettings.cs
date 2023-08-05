@@ -5,12 +5,14 @@ using UnityEngine;
 
 namespace Game
 {
-  [CreateAssetMenu(fileName = "ScoreSettings")]
-  public class ScoreSettings : ScriptableObject
-  {
-    public int _infredientScore;
-    public int _completeBonus;
-    public int _speedBonus;
-    public int[] _popularityBonuses;
-  }
+    [CreateAssetMenu(fileName = "ScoreSettings")]
+    public class ScoreSettings : ScriptableObject
+    {
+        public int IngredientScore;
+        public int CompleteBonus;
+        public int SpeedBonus;
+
+        [Header("5’iŠK")]
+        public int[] PopularityBonuses = new int[5];
+    }
 }

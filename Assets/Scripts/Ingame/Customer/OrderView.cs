@@ -37,7 +37,7 @@ namespace Game
 
         public void OnCompleted()
         {
-            Debug.Log("‚É‚±‚¿‚á‚ñ•\Ž¦");
+            //Debug.Log("‚É‚±‚¿‚á‚ñ•\Ž¦");
         }
 
         public void SetPosition(Vector2 world)
