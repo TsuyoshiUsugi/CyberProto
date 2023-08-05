@@ -12,10 +12,12 @@ namespace Game
     {
         [SerializeField] private Cannon _cannon;
         [SerializeField] private float _shotThreshold;
-        private bool _mouseHold = false;
+        public ReactiveProperty<bool> IsArrowActive { get; private set; } = new ReactiveProperty<bool>(false);
         private Vector2 _clickedCoodination;
         private Vector2 _releasedCoodination;
         private Vector2 _mouseScreenPoint;
+
+        public Vector2 CurrentDirection => _releasedCoodination - _clickedCoodination;
 
         private void Start()
         {
@@ -23,10 +25,10 @@ namespace Game
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0))
                 .Where(_ => _cannon.HasFood())
-                .Where(_ => !_mouseHold)
+                .Where(_ => !IsArrowActive.Value)
                 .Subscribe(_ =>
                 {
-                    _mouseHold = true;
+                    IsArrowActive.Value = true;
                     _mouseScreenPoint = Input.mousePosition;
                     _clickedCoodination = _mouseScreenPoint;
                 });
@@ -35,20 +37,19 @@ namespace Game
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonUp(0))
                 .Where(_ => _cannon.HasFood())
-                .Where(_ => _mouseHold)
+                .Where(_ => IsArrowActive.Value)
                 .Subscribe(_ =>
                 {
                     _mouseScreenPoint = Input.mousePosition;
                     _releasedCoodination = _mouseScreenPoint;
                     if (ExceedingThreshold())
                     {
-                        var screenDir = _releasedCoodination - _clickedCoodination;
-                        var direction = ConvertBulletDirection(screenDir);
+                        var direction = ConvertBulletDirection(CurrentDirection);
                         _cannon.Fire(direction);
                         Debug.Log(direction);
                          transform.Translate(direction.x, direction.y, 0);
                     }
-                    _mouseHold = false;
+                    IsArrowActive.Value = false;
                 });
         }
 
@@ -58,8 +59,7 @@ namespace Game
         /// <returns></returns>
         private bool ExceedingThreshold()
         {
-            var difference = _releasedCoodination - _clickedCoodination;
-            return difference.magnitude > _shotThreshold;
+            return CurrentDirection.magnitude > _shotThreshold;
         }
 
         /// <summary>

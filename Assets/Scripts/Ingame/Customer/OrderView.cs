@@ -1,4 +1,4 @@
-using DG.Tweening;
+Ôªøusing DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +37,7 @@ namespace Game
 
         public void OnCompleted()
         {
-            Debug.Log("Ç…Ç±ÇøÇ·ÇÒï\é¶");
+            Debug.Log("„Å´„Åì„Å°„ÇÉ„ÇìË°®Á§∫");
         }
 
         public void SetPosition(Vector2 world)

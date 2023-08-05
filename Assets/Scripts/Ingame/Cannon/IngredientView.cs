@@ -19,10 +19,6 @@ namespace Game
 
         private List<Ingredient> _availableIngredients = new List<Ingredient>();
         public Subject<Ingredient> IngredientClicked { get; set; } = new Subject<Ingredient>();
-        public void ResetState()
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// 選択した材料を選択可能にする
