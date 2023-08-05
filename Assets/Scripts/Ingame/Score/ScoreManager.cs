@@ -13,6 +13,8 @@ namespace Game
         [SerializeField]
         ScoreSettings _scoreSettings;
 
+        private IGameDirector _gameDirector;
+
         public IReadOnlyReactiveProperty<int> Score => _score;
         private readonly IntReactiveProperty _score = new IntReactiveProperty(0);
 
@@ -24,11 +26,14 @@ namespace Game
                 .AddTo(this);
 
             _score.Subscribe(val => Debug.Log("score : " + val)).AddTo(this);
+
+            _gameDirector = ServiceLocator.Instance.Resolve<IGameDirector>();
         }
 
         private void ObserveCustomer(Customer customer)
         {
             customer.OrderProvided
+                .Where(x => _gameDirector.State.Value == GameState.Play)
                 .Subscribe(evt =>
                 {
                     _score.Value += _scoreSettings.IngredientScore * evt.Food.Ingredients.Length;
@@ -43,6 +48,7 @@ namespace Game
                 .AddTo(this);
 
             customer.ProvideCompleted
+                .Where(x => _gameDirector.State.Value == GameState.Play)
                 .Subscribe(_ =>
                 {
                     _score.Value += _scoreSettings.CompleteBonus;
