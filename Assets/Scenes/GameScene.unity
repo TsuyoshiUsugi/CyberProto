@@ -5968,6 +5968,7 @@ MonoBehaviour:
   _animationInterval: 0.1
   _fadeImage: {fileID: 653556828}
   _fadeTime: 0.5
+  _transitionOut: {fileID: 2100000, guid: ca1d9a4a3113b42968ad94d4e38b129a, type: 2}
 --- !u!224 &2086509033
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6004,6 +6005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 1923317172}
   _fadeTime: 0.5
+  _transitionIn: {fileID: 2100000, guid: ca1d9a4a3113b42968ad94d4e38b129a, type: 2}
 --- !u!1 &2090120250
 GameObject:
   m_ObjectHideFlags: 0
