@@ -10,6 +10,6 @@ namespace Game
     {
         public int _score;
         public int _orderCompleteNum;
-        public int _populality;
+        public float _populality;
     }
 }
