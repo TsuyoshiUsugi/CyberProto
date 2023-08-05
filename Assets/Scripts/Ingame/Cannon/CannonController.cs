@@ -42,7 +42,6 @@ namespace Game
                     {
                         var direction = ConvertBulletDirection(CurrentDirection);
                         _cannon.Fire(direction);
-                        Debug.Log(direction);
                     }
                     IsArrowActive.Value = false;
                 });

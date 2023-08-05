@@ -6,6 +6,7 @@ using UniRx;
 
 public class TestRandomProvider : MonoBehaviour
 {
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -19,4 +20,5 @@ public class TestRandomProvider : MonoBehaviour
             }
         }
     }
+#endif
 }

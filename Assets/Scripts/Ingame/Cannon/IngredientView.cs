@@ -20,11 +20,26 @@ namespace Game
         private List<Ingredient> _availableIngredients = new List<Ingredient>();
         public Subject<Ingredient> IngredientClicked { get; set; } = new Subject<Ingredient>();
 
+        private void Start()
+        {
+            foreach(var union in _ingredientButtonDictionary)
+            {
+                union.Button.OnClickAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        Debug.Log(union.Ingredient.Name);
+                        IngredientClicked.OnNext(union.Ingredient);
+                    }).AddTo(this);
+            }
+        }
+
         /// <summary>
-        /// 選択した材料を選択可能にする
+        /// 選択した材料を選択できないようにする
         /// </summary>
         /// <param name="ingredients"></param>
-        public void SetActiveIngredients(List<Ingredient> ingredients)
+        /// <param name="selecting"></param>
+
+        public void SetActiveIngredients(List<Ingredient> ingredients, List<Ingredient> selecting)
         {
             foreach (var ingredientButton in _ingredientButtonDictionary)
             {
@@ -34,9 +49,17 @@ namespace Game
 
             foreach (var ingredient in ingredients)
             {
+                Debug.Log($"ingred: {ingredient.Name}");
                 var c = GetIngredientUI(ingredient);
                 c.Button.enabled = true;
                 c.Image.color = new Color(1, 1, 1, 1);
+            }
+
+            foreach (var selectIngredient in selecting)
+            {
+                var c = GetIngredientUI(selectIngredient);
+                c.Button.enabled = false;
+                c.Image.color = Color.gray;
             }
         }
 
@@ -51,6 +74,19 @@ namespace Game
                 var ui = GetIngredientUI(i);
 
                 ui.Image.transform.DOMove(_cannonTrans.position, 0.5f);
+            }
+        }
+        /// <summary>
+        /// 材料の位置を元に戻す
+        /// </summary>
+
+        public void ResetIngredientView()
+        {
+            foreach (var ui in _ingredientButtonDictionary)
+            {
+                ui.Button.enabled = true;
+                ui.Image.color = new Color(1, 1, 1, 1);
+                ui.Image.transform.position = ui.Button.transform.position;
             }
         }
 

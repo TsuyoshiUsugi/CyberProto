@@ -39,7 +39,7 @@ namespace Game
             bullet.Direction = bulletVector;
             bullet.SetFood(CurrentFood);
             // 検討
-            SetFood(null);
+            CurrentFood = null;
             Fired.OnNext(Unit.Default);
         }
         
@@ -63,21 +63,29 @@ namespace Game
         /// <param name="next"></param>
         private List<Ingredient> CalculateFoodDifference(Food previous, Food next)
         {
-            if(next == null)
+            Debug.Log("fired");
+            if (previous is not null) Debug.Log($"prev :{previous.Name}");
+            if (next is not null) Debug.Log($"next :{next.Name}");
+            if (next is null)
             {
                 throw new NullReferenceException();
             }
 
-            var diffs = new List<Ingredient>();
-            foreach (var ingredient in next.Ingredients)
+            if(previous is not null)
             {
-                if (previous == null) diffs.Add(ingredient);
-                else if(previous.Ingredients.Any(preIngredient => preIngredient.Id == ingredient.Id))
-                {
-                    diffs.Add(ingredient);
-                }
+                var expect = next.Ingredients.Except(previous.Ingredients);
+                return expect.ToList();
             }
-            return diffs;
+            else
+            {
+                Debug.Log(next.Ingredients);
+                Debug.Log(next.Ingredients.Length);
+                foreach(var e in next.Ingredients)
+                {
+                    Debug.Log($"list: {e}");
+                }
+                return next.Ingredients.ToList();
+            }
         }
     }
 }
