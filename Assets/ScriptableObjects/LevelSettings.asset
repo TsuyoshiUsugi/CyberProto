@@ -32,3 +32,6 @@ MonoBehaviour:
     initOffset: 0
   rushStartTime: 30
   rushEndTime: 45
+  _rankSBorder: 1000
+  _rankABorder: 500
+  _rankBBorder: 333

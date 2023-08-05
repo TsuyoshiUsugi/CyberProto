@@ -13,6 +13,7 @@ namespace Game
         [SerializeField] int _rankSBorder = 100;
         [SerializeField] int _rankABorder = 80;
         [SerializeField] int _rankBBorder = 70;
+        [SerializeField] GameContext _gameContext;
 
         [Header("スコアの参照一覧")]
         [SerializeField] GameObject _resultCanvas;
@@ -43,24 +44,26 @@ namespace Game
         /// </summary>
         public void ShowResult()
         {
+            var scoreManager = FindAnyObjectByType<ScoreManager>();
+            var popularityManager = FindAnyObjectByType<PopularityManager>();
             _resultCanvas.SetActive(true);
-            _scoreText.text = $"{_resultContext._score} G";
-            _orderCompleteNum.text = $"料理を提供出来た数 {_resultContext._orderCompleteNum} 人";
-            _popularity.text = $"評判 {_resultContext._populality:F1}";
-            _resultRank.text = $"評価 {CalculateRank(_resultContext._score)}";
+            _scoreText.text = $"{scoreManager.Score.Value} G";
+            _orderCompleteNum.text = $"料理を提供出来た数 {scoreManager.ProvideCompletedCount.Value} 人";
+            _popularity.text = $"評判 {popularityManager.PopularityScore.Value:F1}";
+            _resultRank.text = $"評価 {CalculateRank(scoreManager.Score.Value)}";
         }
 
         ResultRank CalculateRank(int score)
         {
-            if (score >= _rankSBorder)
+            if (score >= _gameContext.levelSettings._rankSBorder)
             {
                 return ResultRank.S;
             }
-            else if (score >= _rankABorder)
+            else if (score >= _gameContext.levelSettings._rankABorder)
             {
                 return ResultRank.A;
             }
-            else if (score >= _rankBBorder)
+            else if (score >= _gameContext.levelSettings._rankBBorder)
             {
                 return ResultRank.B;
             }
