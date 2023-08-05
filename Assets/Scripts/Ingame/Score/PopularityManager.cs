@@ -7,6 +7,8 @@ namespace Game
 {
     public class PopularityManager : MonoBehaviour
     {
+        private IGameDirector _gameDirector;
+
         private readonly FloatReactiveProperty _popularityScore = new FloatReactiveProperty();
         public IReadOnlyReactiveProperty<float> PopularityScore => _popularityScore;
 
@@ -48,11 +50,15 @@ namespace Game
             spawner.CustomerInstantiated
                 .Subscribe(ObserveCustomer)
                 .AddTo(this);
+
+            _gameDirector = ServiceLocator.Instance.Resolve<IGameDirector>();
         }
 
         private void ObserveCustomer(Customer customer)
         {
-            customer.OrderProvided.Subscribe(evt =>
+            customer.OrderProvided
+                .Where(x => _gameDirector.State.Value == GameState.Play)
+                .Subscribe(evt =>
             {
                 if (evt.Timing == ProvideTiming.Fast)
                 {
@@ -64,12 +70,16 @@ namespace Game
                 }
             });
 
-            customer.ProvideCompleted.Subscribe(_ =>
+            customer.ProvideCompleted
+                .Where(x => _gameDirector.State.Value == GameState.Play)
+                .Subscribe(_ =>
             {
                 PopularityScoreValue += _completedAdd;
             });
 
-            customer.NotProvided.Subscribe(_ =>
+            customer.NotProvided
+                .Where(x => _gameDirector.State.Value == GameState.Play)
+                .Subscribe(_ =>
             {
                 PopularityScoreValue -= _missDecrease;
             });

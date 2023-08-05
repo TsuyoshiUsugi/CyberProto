@@ -81,7 +81,6 @@ namespace Game.View
         {
             if (_currentFood == food) return;
             _currentFood = food;
-            Debug.Log(food);
 
             if (food == null)
             {
