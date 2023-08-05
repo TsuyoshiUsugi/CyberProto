@@ -10,13 +10,20 @@ namespace Game
     {
         [SerializeField] LevelSettings _settings;
 
+        /// <summary>
+        /// SettingからFoodを取得してランダムに取得可能な食事を返す
+        /// </summary>
+        /// <returns></returns>
         public Food GetRandomFood()
         {
-            //SettingからFoodを取得してランダムに取得可能な食事を返す
             int rnd = UnityEngine.Random.Range(0, _settings.foods.Length);
             return _settings.foods[rnd];
         }
-
+        
+        /// <summary>
+        /// Settingsの中にあるFoodの全食材を返す
+        /// </summary>
+        /// <returns></returns>
         public List<Ingredient> GetIngredients()
         {
             List<Ingredient> ingredients = new();
@@ -32,6 +39,11 @@ namespace Game
             return ingredients;
         }
 
+        /// <summary>
+        /// 引き数の食材をもとに候補となる食材を返す
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
         public List<Food> GetCandidateFoods(List<Ingredient> items)
         {
             List<Food> candidateFoods = new();
