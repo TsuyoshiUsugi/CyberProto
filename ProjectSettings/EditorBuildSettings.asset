@@ -9,15 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/ShutaTest/ShutaTest.unity
-    guid: 5fedd6838ede6ba43a79d334cf15099a
-  - enabled: 1
-    path: Assets/Scenes/ShutaTest/TransitionTest.unity
-    guid: 289006c3627be0c469ff2887fca4d964
-  - enabled: 1
     path: Assets/Scenes/TitleScene.unity
     guid: f858898773be745459cfefa39ad1ca45
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: b5ec62bb9b44a48bcba7d7c75b07dc2a
+  - enabled: 1
+    path: Assets/Scenes/ShutaTest/ShutaTest.unity
+    guid: 5fedd6838ede6ba43a79d334cf15099a
+  - enabled: 1
+    path: Assets/Scenes/ShutaTest/TransitionTest.unity
+    guid: 289006c3627be0c469ff2887fca4d964
   m_configObjects: {}
