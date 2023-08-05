@@ -38,7 +38,7 @@ namespace Title
                   _stageSelectBack.transform.localScale = Vector3.zero;
                   _stageSelectObject.SetActive(true);
                 })
-                .Append(_stageSelectBack.transform.DOScale(1.0f, 0.1f))
+                .Append(_stageSelectBack.transform.DOScale(1.0f, 0.1f).SetEase(Ease.OutBack))
                 .Play();
         }
       });
@@ -48,7 +48,7 @@ namespace Title
         if (!_optionObject.activeSelf)
         {
           var seq = DOTween.Sequence()
-                .Append(_stageSelectBack.transform.DOScale(0.0f, 0.1f))
+                .Append(_stageSelectBack.transform.DOScale(0.0f, 0.1f).SetEase(Ease.InBack))
                 .OnComplete(() =>
                 {
                   _stageSelectBack.transform.localScale = Vector3.one;
@@ -74,14 +74,14 @@ namespace Title
                 _optionBack.transform.localScale = Vector3.zero;
                 _optionObject?.SetActive(true);
               })
-              .Append(_optionBack.transform.DOScale(1.0f, 0.1f))
+              .Append(_optionBack.transform.DOScale(1.0f, 0.1f).SetEase(Ease.OutBack))
               .Play();
       });
 
       _exitOptionButton.onClick.AddListener(() =>
       {
         var seq = DOTween.Sequence()
-                .Append(_optionBack.transform.DOScale(0.0f, 0.1f))
+                .Append(_optionBack.transform.DOScale(0.0f, 0.1f).SetEase(Ease.InBack))
                 .OnComplete(() =>
                 {
                   _openStageSelectButton.enabled = true;
