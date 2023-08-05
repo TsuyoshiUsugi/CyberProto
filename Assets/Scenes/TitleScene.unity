@@ -2039,11 +2039,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45f55422ed401d49b7f4b82ca6f77f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startButton: {fileID: 1677929785}
-  _quitButton: {fileID: 1161691125}
-  _optionButton: {fileID: 1918414065}
-  _optionObject: {fileID: 0}
-  _isOpen: 0
+  _openStageSelectButton: {fileID: 1677929785}
+  _quitStageSelectButton: {fileID: 1492736777}
+  _quitGameButton: {fileID: 1161691125}
+  _openOptionButton: {fileID: 1918414065}
+  _exitOptionButton: {fileID: 624151051}
+  _optionObject: {fileID: 1256627377}
+  _stageSelectObject: {fileID: 1017686264}
 --- !u!1001 &1205842924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9162,7 +9164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6552452141319186563, guid: 07f7be27a1d9b47ecaae44c45e849d61, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 158.33333
+      value: 158.33331
       objectReference: {fileID: 0}
     - target: {fileID: 6552452141319186563, guid: 07f7be27a1d9b47ecaae44c45e849d61, type: 3}
       propertyPath: m_AnchoredPosition.y
