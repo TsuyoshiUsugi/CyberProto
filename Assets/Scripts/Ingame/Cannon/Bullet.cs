@@ -10,17 +10,25 @@ namespace Game
 {
     public class Bullet : MonoBehaviour
     {
-        public Food Food { get; set; }
+        private SpriteRenderer _spriteRenderer;
+        public Food Food { get; private set; }
         private const float lifeSpan = 10f;
         public Vector2 Direction { get; set; }
 
         private void Start()
         {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             this.UpdateAsObservable().Subscribe(_ =>
             {
                 transform.Translate(Direction.x, Direction.y, 0);
             });
             Destroy(gameObject, lifeSpan);
+        }
+
+        public void SetFood(Food food)
+        {
+            Food = food;
+            _spriteRenderer.sprite = food.Icon;
         }
     }
 }

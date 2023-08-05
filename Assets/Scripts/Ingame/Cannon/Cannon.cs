@@ -33,11 +33,11 @@ namespace Game
         /// <exception cref="NotImplementedException"></exception>
         public void Fire(Vector2 bulletVector)
         {
-            //if (!HasFood()) throw new NullReferenceException("CurrentFoodが設定されていません。");
+            if (!HasFood()) throw new NullReferenceException("CurrentFoodが設定されていません。");
             var bulletObject = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
             var bullet = bulletObject.GetComponent<Bullet>();
             bullet.Direction = bulletVector;
-            bullet.Food = CurrentFood;
+            bullet.SetFood(CurrentFood);
             // 検討
             SetFood(null);
             Fired.OnNext(Unit.Default);
