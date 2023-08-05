@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class BgmPlayer : MonoBehaviour, IBgmPlayer
 {
+    [SerializeField]
+    private Option _option;
     [SerializeField]
     private AudioSource _audioSource;
     [SerializeField]
@@ -54,6 +57,7 @@ public class BgmPlayer : MonoBehaviour, IBgmPlayer
     private void Awake()
     {
         ServiceLocator.Instance.Register<IBgmPlayer>(this);
+        _option.BgmVolumeChanged.Subscribe(volume => _audioSource.volume = volume).AddTo(this);
     }
     private void OnDestroy()
     {

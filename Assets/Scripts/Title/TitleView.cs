@@ -19,7 +19,10 @@ namespace Title
     [SerializeField] GameObject _stageSelectObject;
     [SerializeField] Image _optionBack;
     [SerializeField] Image _stageSelectBack;
+    [SerializeField] Slider _seSlider;
+    [SerializeField] Slider _bgmSlider;
     [SerializeField] AudioClip _buttonClip;
+    [SerializeField] Option _option;
 
     public Subject<Unit> QuitButtonClicked = new Subject<Unit>();
 
@@ -102,6 +105,23 @@ namespace Title
                 })
                 .Play();
       });
+
+
+        _option.Init();
+        _seSlider.onValueChanged.AddListener((value) =>
+        {
+            _option.SEValue = value;
+            _option.Save();
+        });
+        _bgmSlider.onValueChanged.AddListener((value) =>
+        {
+            _option.BGMValue = value;
+            _option.Save();
+        });
+        _option.Load();
+
+        _bgmSlider.value = _option.BGMValue;
+        _seSlider.value = _option.SEValue;
     }
     
     private void PlayButtonSe()

@@ -2049,7 +2049,10 @@ MonoBehaviour:
   _stageSelectObject: {fileID: 1017686264}
   _optionBack: {fileID: 198154914}
   _stageSelectBack: {fileID: 462067606}
+  _seSlider: {fileID: 233664437}
+  _bgmSlider: {fileID: 1387460733}
   _buttonClip: {fileID: 8300000, guid: 0a9d2fbc26b0f1e44a766a41b8036aba, type: 3}
+  _option: {fileID: 11400000, guid: d4351eb12d35dc14bb94ed0165f264e2, type: 2}
 --- !u!1001 &1205842924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9091,6 +9094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b2dcade25dae0439169422d613045c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _option: {fileID: 11400000, guid: d4351eb12d35dc14bb94ed0165f264e2, type: 2}
   _audioSource: {fileID: 2103998400}
 --- !u!114 &2103998399
 MonoBehaviour:
@@ -9104,6 +9108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5903ed9e1cfb22478a2a614b1c8d734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _option: {fileID: 11400000, guid: d4351eb12d35dc14bb94ed0165f264e2, type: 2}
   _audioSource: {fileID: 2103998401}
   _fadeOutSpeed: 2
 --- !u!82 &2103998400
