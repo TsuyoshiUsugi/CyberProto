@@ -23,6 +23,11 @@ namespace Game
             // マウスをクリックしたときの処理を購読
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0))
+                .Where(_ =>
+                {
+                    var pos = Input.mousePosition;
+                    return ValidRange(pos);
+                })
                 .Where(_ => _cannon.HasFood())
                 .Where(_ => !IsArrowActive.Value)
                 .Subscribe(_ =>
@@ -65,7 +70,14 @@ namespace Game
         private Vector2 ConvertBulletDirection(Vector2 dir)
         {
             // TODO: 要調整(Lerpしてもいいかも)
-            return dir * -0.0001f;
+            return dir.normalized * -10f;
+        }
+
+        private bool ValidRange(Vector2 vec)
+        {
+            var normarizedYCoodinate = vec.y / Screen.height;
+            var lowerBound = 0.20f;
+            return normarizedYCoodinate > lowerBound;
         }
     }
 }

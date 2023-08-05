@@ -19,6 +19,7 @@ namespace Game
 
         private List<Ingredient> _availableIngredients = new List<Ingredient>();
         public Subject<Ingredient> IngredientClicked { get; set; } = new Subject<Ingredient>();
+        private List<Tween> _ingredientTweens = new List<Tween>();
 
         private void Start()
         {
@@ -73,7 +74,7 @@ namespace Game
             {
                 var ui = GetIngredientUI(i);
 
-                ui.Image.transform.DOMove(_cannonTrans.position, 0.5f);
+                _ingredientTweens.Add(ui.Image.transform.DOMove(_cannonTrans.position, 0.5f));
             }
         }
         /// <summary>
@@ -82,6 +83,11 @@ namespace Game
 
         public void ResetIngredientView()
         {
+            foreach(var tween in _ingredientTweens)
+            {
+                tween.Kill();
+            }
+            _ingredientTweens.Clear(); 
             foreach (var ui in _ingredientButtonDictionary)
             {
                 ui.Button.enabled = true;
