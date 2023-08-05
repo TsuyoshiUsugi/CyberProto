@@ -1,22 +1,59 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx.Triggers;
 using UniRx;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
-{
-    public Vector2 Direction { get; set; }
-    public float Speed { get; set; }
 
-    private void Start()
+namespace Game
+{
+    public class Bullet : MonoBehaviour
     {
-        this.UpdateAsObservable().Subscribe(_ =>
+        private SpriteRenderer _spriteRenderer;
+        public Food Food { get; private set; }
+        private const float LifeSpan = 10f;
+        public Vector2 Direction { get; set; }
+
+        private void Start()
         {
-            transform.Translate(Direction.x, Direction.y, 0);
-        });
+            var collider = GetComponent<Collider2D>();
+
+            collider.OnTriggerEnter2DAsObservable()
+                .Subscribe(other =>
+                {
+                    var customer = other.GetComponent<ICustomer>();
+                    if(customer != null)
+                    {
+                        if (customer.IsContains(Food))
+                        {
+                            customer.OnProvide(Food);
+                            HitAnimation();
+                        }
+                    }
+                }).AddTo(this);
+
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            this.UpdateAsObservable().Subscribe(_ =>
+            {
+                transform.Translate(Direction.x, Direction.y, 0);
+            });
+            Destroy(gameObject, LifeSpan);
+        }
+
+        /// <summary>
+        /// Spriteをセットする
+        /// </summary>
+        /// <param name="food"></param>
+        public void SetFood(Food food)
+        {
+            Food = food;
+            _spriteRenderer.sprite = food.Icon;
+        }
+
+        private void HitAnimation()
+        {
+            Destroy(gameObject);
+        }
     }
-    
-    // バレットにぶつかったとき何かしらする
 }

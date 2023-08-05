@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -15,9 +15,18 @@ namespace Game
         
         public List<Ingredient> Canditates { get; private set; } = new List<Ingredient>();
         public Subject<List<Ingredient>> CandidateChanged { get; } = new Subject<List<Ingredient>>();
-        
+
+
+        private void Start()
+        {
+            _cannon.Fired.Subscribe(_ =>
+            {
+                ResetIngredients();
+            }).AddTo(this);  
+        }
+
         /// <summary>
-        /// ‘I‘ğ’†‚ÌŞ—¿‚ğXV‚·‚é
+        /// é¸æŠä¸­ã®ææ–™ã‚’æ›´æ–°ã™ã‚‹
         /// </summary>
         /// <param name="ingredient"></param>
         public void AddIngredient(Ingredient ingredient)
@@ -27,18 +36,18 @@ namespace Game
             {
                 _cannon.SetFood(_creatableFood);
             }
-            // Food‚ªì‚ê‚È‚­‚Ä‚àcandidate‚ÍXV‚³‚ê‚éê‡‚ª‚ ‚é
+            // FoodãŒä½œã‚Œãªãã¦ã‚‚candidateã¯æ›´æ–°ã•ã‚Œã‚‹å ´åˆãŒã‚ã‚‹
             Canditates = _foodManager.GetCandidateIngredients(_selecting);
             CandidateChanged.OnNext(Canditates);
         }
 
         /// <summary>
-        /// ‘I‘ğ’†‚ÌŞ—¿‚ğƒŠƒZƒbƒg‚·‚é
+        /// é¸æŠä¸­ã®ææ–™ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
         /// </summary>
         public void ResetIngredients()
         {
             _selecting.Clear();
-            // Food‚ªì‚ê‚È‚­‚Ä‚àcandidate‚ÍXV‚³‚ê‚éê‡‚ª‚ ‚é
+            // FoodãŒä½œã‚Œãªãã¦ã‚‚candidateã¯æ›´æ–°ã•ã‚Œã‚‹å ´åˆãŒã‚ã‚‹
             Canditates = _foodManager.GetCandidateIngredients(_selecting);
             CandidateChanged.OnNext(Canditates);
         }

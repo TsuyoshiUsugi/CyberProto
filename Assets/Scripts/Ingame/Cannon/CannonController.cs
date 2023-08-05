@@ -12,10 +12,11 @@ namespace Game
     {
         [SerializeField] private Cannon _cannon;
         [SerializeField] private float _shotThreshold;
-        private bool _mouseHold = false;
+        public ReactiveProperty<bool> IsArrowActive { get; private set; } = new ReactiveProperty<bool>(false);
         private Vector2 _clickedCoodination;
-        private Vector2 _releasedCoodination;
         private Vector2 _mouseScreenPoint;
+
+        public Vector2 CurrentDirection => (Vector2)Input.mousePosition - _clickedCoodination;
 
         private void Start()
         {
@@ -23,34 +24,30 @@ namespace Game
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0))
                 .Where(_ => _cannon.HasFood())
-                .Where(_ => !_mouseHold)
+                .Where(_ => !IsArrowActive.Value)
                 .Subscribe(_ =>
                 {
-                    _mouseHold = true;
-                    _mouseScreenPoint = Input.mousePosition;
-                    _clickedCoodination = _mouseScreenPoint;
+                    IsArrowActive.Value = true;
+                    _clickedCoodination = Input.mousePosition;
                 });
 
             // マウスを離したときの処理を購読
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonUp(0))
                 .Where(_ => _cannon.HasFood())
-                .Where(_ => _mouseHold)
+                .Where(_ => IsArrowActive.Value)
                 .Subscribe(_ =>
                 {
-                    _mouseScreenPoint = Input.mousePosition;
-                    _releasedCoodination = _mouseScreenPoint;
                     if (ExceedingThreshold())
                     {
-                        var screenDir = _releasedCoodination - _clickedCoodination;
-                        var direction = ConvertBulletDirection(screenDir);
+                        var direction = ConvertBulletDirection(CurrentDirection);
                         _cannon.Fire(direction);
-                        // transform.Translate(direction.x, direction.y, 0);
+                        Debug.Log(direction);
                     }
-
-                    _mouseHold = false;
+                    IsArrowActive.Value = false;
                 });
         }
+
 
         /// <summary>
         /// 引っ張ったベクトルの大きさが閾値を超えているか
@@ -58,8 +55,7 @@ namespace Game
         /// <returns></returns>
         private bool ExceedingThreshold()
         {
-            var difference = _releasedCoodination - _clickedCoodination;
-            return difference.magnitude > _shotThreshold;
+            return CurrentDirection.magnitude > _shotThreshold;
         }
 
         /// <summary>
@@ -69,8 +65,8 @@ namespace Game
         /// <returns></returns>
         private Vector2 ConvertBulletDirection(Vector2 dir)
         {
-            // TODO: 要調整
-            return dir * -0.01f;
+            // TODO: 要調整(Lerpしてもいいかも)
+            return dir * -0.0001f;
         }
     }
 }

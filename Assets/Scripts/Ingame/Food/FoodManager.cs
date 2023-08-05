@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,20 +10,13 @@ namespace Game
     {
         [SerializeField] LevelSettings _settings;
 
-        /// <summary>
-        /// Setting‚©‚çFood‚ğæ“¾‚µ‚Äƒ‰ƒ“ƒ_ƒ€‚Éæ“¾‰Â”\‚ÈH–‚ğ•Ô‚·
-        /// </summary>
-        /// <returns></returns>
         public Food GetRandomFood()
         {
+            //Settingã‹ã‚‰Foodã‚’å–å¾—ã—ã¦ãƒ©ãƒ³ãƒ€ãƒ ã«å–å¾—å¯èƒ½ãªé£Ÿäº‹ã‚’è¿”ã™
             int rnd = UnityEngine.Random.Range(0, _settings.foods.Length);
             return _settings.foods[rnd];
         }
-        
-        /// <summary>
-        /// Settings‚Ì’†‚É‚ ‚éFood‚Ì‘SHŞ‚ğ•Ô‚·
-        /// </summary>
-        /// <returns></returns>
+
         public List<Ingredient> GetIngredients()
         {
             List<Ingredient> ingredients = new();
@@ -39,15 +32,10 @@ namespace Game
             return ingredients;
         }
 
-        /// <summary>
-        /// ˆø‚«”‚ÌHŞ‚ğ‚à‚Æ‚ÉŒó•â‚Æ‚È‚éHŞ‚ğ•Ô‚·
-        /// </summary>
-        /// <param name="items"></param>
-        /// <returns></returns>
         public List<Food> GetCandidateFoods(List<Ingredient> items)
         {
             List<Food> candidateFoods = new();
-            //Še—¿—‚ğŒ©‚ÄAì‚ê‚»‚¤‚È‚à‚Ì‚ğ•Ô‚·
+            //å„æ–™ç†ã‚’è¦‹ã¦ã€ä½œã‚Œãã†ãªã‚‚ã®ã‚’è¿”ã™
             foreach (var food in _settings.foods)
             {
                 var ingredientNum = food.Ingredients.Length;
@@ -64,7 +52,7 @@ namespace Game
         }
 
         /// <summary>
-        /// Ingredient‚ğ‘I‚ñ‚¾‚ÉŸ‚É‘I‘ğ‰Â”\‚È‘fŞ‚ÌƒŠƒXƒg‚ğ•Ô‚·
+        /// Ingredientã‚’é¸ã‚“ã æ™‚ã«æ¬¡ã«é¸æŠå¯èƒ½ãªç´ æã®ãƒªã‚¹ãƒˆã‚’è¿”ã™
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
@@ -72,7 +60,7 @@ namespace Game
         {
             List<Ingredient> selectableIngredient = new();
 
-            List<Food> creatableFoods = new();   //Item‚Åì‚ê‚éFood‚ª‚©‚¦‚Á‚Ä—ˆ‚é
+            List<Food> creatableFoods = new();   //Itemã§ä½œã‚Œã‚‹FoodãŒã‹ãˆã£ã¦æ¥ã‚‹
 
             foreach (var ingredient in items)
             {
@@ -85,7 +73,7 @@ namespace Game
                 }
             }
 
-            //cratable‚ÌHŞ‚ğ‘S‚Ä•Ô‚·
+            //cratableã®é£Ÿæã‚’å…¨ã¦è¿”ã™
             foreach (var food in creatableFoods)
             {
                 foreach (var ingredient in food.Ingredients)
@@ -98,7 +86,7 @@ namespace Game
         }
 
         /// <summary>
-        /// ˆø‚«”‚É—^‚¦‚ç‚ê‚½HŞ‚½‚¿‚Æƒ}ƒbƒ`‚·‚éFood‚ª‚ ‚éê‡•Ô‚·
+        /// å¼•ãæ•°ã«ä¸ãˆã‚‰ã‚ŒãŸé£ŸæãŸã¡ã¨ãƒãƒƒãƒã™ã‚‹FoodãŒã‚ã‚‹å ´åˆè¿”ã™
         /// </summary>
         /// <param name="items"></param>
         /// <param name="food"></param>
@@ -119,13 +107,13 @@ namespace Game
                     if (items.Contains(ingredient)) currentMatchNum++;
                 }
 
-                if (currentMatchNum == maxIngredientNum)    //Food‚ğì‚é‚Ì‚É•K—v‚È‘fŞ‚Ô‚ñ‘fŞ‚ª“ü‚Á‚Ä‚½‚ç
+                if (currentMatchNum == maxIngredientNum)    //Foodã‚’ä½œã‚‹ã®ã«å¿…è¦ãªç´ æã¶ã‚“ç´ æãŒå…¥ã£ã¦ãŸã‚‰
                 {
                     if (!food) food = candidatefood;
 
                     if (food.Ingredients.Length == candidatefood.Ingredients.Length && food != candidatefood)
                     {
-                        Debug.LogError("ˆø‚«”‚Ì‘fŞ‚Åì‚ê‚é‘g‚İ‡‚í‚¹‚ª•¡”‚ ‚è‚Ü‚·");
+                        Debug.LogError("å¼•ãæ•°ã®ç´ æã§ä½œã‚Œã‚‹çµ„ã¿åˆã‚ã›ãŒè¤‡æ•°ã‚ã‚Šã¾ã™");
                         Debug.Log(food.Name);
                         Debug.Log(candidatefood.Name);
                     }
