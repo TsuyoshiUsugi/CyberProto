@@ -12,6 +12,9 @@ public class GameServiceBuilder : Utility.ServiceLocatorBuilder
     [SerializeField]
     private GameDirectionMediator _gameDirectionMediator;
 
+    [SerializeField]
+    private Spawner _spawner;
+
     public override void Build(ServiceLocator locator)
     {
         locator.Register<IFoodContainer>(_foodManager)
@@ -19,5 +22,8 @@ public class GameServiceBuilder : Utility.ServiceLocatorBuilder
 
         locator.Register<IGameDirector>(_gameDirectionMediator)
             .AddTo(_gameDirectionMediator);
+
+        locator.Register<ISpawner>(_spawner)
+            .AddTo(_spawner);
     }
 }
