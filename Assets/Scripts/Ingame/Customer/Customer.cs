@@ -54,10 +54,15 @@ namespace Game
         private ReactiveCollection<Order> _orders = new ReactiveCollection<Order>();
         public IReadOnlyReactiveCollection<Order> Orders => _orders;
 
+        private Subject<Unit> _orderProvidedSubject = new Subject<Unit>();
+        public IObservable<Unit> OrderProvided => _orderProvidedSubject;
+
 
         [SerializeField]
         [Range(1, 3)]
         private int _requestCount = 1;
+
+        public int RequestCount => _requestCount;
 
         public bool IsContains(Food food)
         {
@@ -74,6 +79,8 @@ namespace Game
             order.IsProvided = true;
             _orders[order.OrderNumber] = order;
 
+            _orderProvidedSubject.OnNext(Unit.Default);
+
             if (IsComplete())
             {
                 _provideCompletedSubject.OnNext(Unit.Default);
@@ -89,8 +96,7 @@ namespace Game
         void Start()
         {
             // フードコンテナからランダムな料理を受け取ってくる
-            //var foodContainer = ServiceLocator.Instance.Resolve<IFoodContainer>();
-            var foodContainer = FindFirstObjectByType<FoodManager>();
+            var foodContainer = ServiceLocator.Instance.Resolve<IFoodContainer>();
 
             for (int i = 0; i < _requestCount; i++)
             {
