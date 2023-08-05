@@ -9,25 +9,56 @@ namespace Title
 {
     public class TitleView : MonoBehaviour
     {
-        [SerializeField] Button _startButton;
-        [SerializeField] Button _quitButton;
-        [SerializeField] Button _optionButton;
+        [SerializeField] Button _openStageSelectButton;
+        [SerializeField] Button _quitStageSelectButton;
+        [SerializeField] Button _quitGameButton;
+        [SerializeField] Button _openOptionButton;
+        [SerializeField] Button _exitOptionButton;
         [SerializeField] GameObject _optionObject;
-        [SerializeField] bool _isOpen = false;
+        [SerializeField] GameObject _stageSelectObject;
 
-        public Subject<Unit> StartButtonClicked = new Subject<Unit>();
         public Subject<Unit> QuitButtonClicked = new Subject<Unit>();
 
         // Start is called before the first frame update
         void Start()
         {
             if(_optionObject) _optionObject.SetActive(false);
-            _startButton.onClick.AddListener(() => StartButtonClicked.OnNext(Unit.Default));
-            _quitButton.onClick.AddListener(() => QuitButtonClicked.OnNext(Unit.Default));
-            _optionButton.onClick.AddListener(() => {
-                _optionObject?.SetActive(!_isOpen);
-                _isOpen = !_isOpen;
-                });
+            if(_stageSelectObject) _stageSelectObject.SetActive(false);
+
+            _openStageSelectButton.onClick.AddListener(() =>
+            {
+                if (!_optionObject.activeSelf)
+                {
+                    _stageSelectObject.SetActive(true);
+                }
+            });
+
+            _quitStageSelectButton.onClick.AddListener(() =>
+            {
+                if (!_optionObject.activeSelf)
+                {
+                    _stageSelectObject.SetActive(false);
+                }
+            });
+
+            _quitGameButton.onClick.AddListener(() =>
+            {
+                if (!_optionObject.activeSelf)
+                QuitButtonClicked.OnNext(Unit.Default);
+            });
+            _openOptionButton.onClick.AddListener(() => 
+            {
+                _openStageSelectButton.enabled = false;
+                _quitGameButton.enabled = false;
+                _optionObject?.SetActive(true); 
+            });
+
+            _exitOptionButton.onClick.AddListener(() =>
+            {
+                _openStageSelectButton.enabled = true;
+                _quitGameButton.enabled = true;
+                _optionObject?.SetActive(false);
+            });
         }
 
     }

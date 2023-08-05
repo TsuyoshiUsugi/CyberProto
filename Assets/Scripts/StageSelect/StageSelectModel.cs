@@ -9,5 +9,6 @@ public class StageSelectModel : MonoBehaviour
     public void SelectStage(LevelSettings loadLevel)
     {
         _gameContext.levelSettings = loadLevel;
+        ServiceLocator.Instance.Resolve<ISceneTransition>().FadeOut();
     }
 }
