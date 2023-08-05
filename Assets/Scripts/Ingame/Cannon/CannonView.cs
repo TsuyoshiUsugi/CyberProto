@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +12,13 @@ namespace Game
         [SerializeField] private SpriteRenderer _arrowRenderer;
         [SerializeField] private SpriteRenderer _cannonRenderer;
 
+        private void Start()
+        {
+            _arrowRenderer.enabled = false;
+        }
+
         /// <summary>
-        /// ƒ^ƒbƒv’†‚©‚Ç‚¤‚©
+        /// ã‚¿ãƒƒãƒ—ä¸­ã‹ã©ã†ã‹
         /// </summary>
         /// <param name="active"></param>
         public void SetActive(bool active)
@@ -24,13 +29,13 @@ namespace Game
             }
             else
             {
-                _arrowRenderer.enabled = true;
-                SetCannonDirection(Vector2.up);
+                _arrowRenderer.enabled = false;
+                SetCannonDirection(Vector2.down);
             }
         }
 
         /// <summary>
-        /// –Cg‚Æ–îˆó‚ÌŒü‚«‚ÆƒTƒCƒY‚ğXV‚·‚é
+        /// ç ²èº«ã¨çŸ¢å°ã®å‘ãã¨ã‚µã‚¤ã‚ºã‚’æ›´æ–°ã™ã‚‹
         /// </summary>
         /// <param name="vector"></param>
 
@@ -38,12 +43,12 @@ namespace Game
         {
             _arrowRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
             _cannonRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
-            var scale = vector.magnitude;
+            var scale = vector.magnitude * 0.001f;
             SetArrowScale(scale);
         }
 
         /// <summary>
-        /// –îˆó‚ÌŒü‚«‚ğ•ÏX‚·‚é
+        /// çŸ¢å°ã®å‘ãã‚’å¤‰æ›´ã™ã‚‹
         /// </summary>
         /// <param name="vector"></param>
         public void SetArrowDirection(Vector2 vector)
@@ -53,16 +58,16 @@ namespace Game
 
 
         /// <summary>
-        /// –îˆó‚Ì‘å‚«‚³‚ğ•ÏX‚·‚é
+        /// çŸ¢å°ã®å¤§ãã•ã‚’å¤‰æ›´ã™ã‚‹
         /// </summary>
         /// <param name="scale"></param>
         public void SetArrowScale(float scale)
         {
-            _arrowRenderer.transform.localScale = new Vector3(scale, scale, scale);
+            _arrowRenderer.transform.localScale = new Vector3(scale * 0.75f, scale, scale);
         }
 
         /// <summary>
-        /// –Cg‚ÌŒü‚«‚ğ•ÏX‚·‚é
+        /// ç ²èº«ã®å‘ãã‚’å¤‰æ›´ã™ã‚‹
         /// </summary>
         /// <param name="vector"></param>
         public void SetCannonDirection(Vector2 vector)
@@ -70,14 +75,14 @@ namespace Game
             _cannonRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
         }
         /// <summary>
-        /// vector‚ğdegree‚É•ÏŠ·‚·‚é
+        /// vectorã‚’degreeã«å¤‰æ›ã™ã‚‹
         /// </summary>
         /// <param name="vector"></param>
         /// <returns></returns>
         private float GetVectorDegree(Vector2 vector)
         {
             var rad = Mathf.Atan2(vector.y, vector.x);
-            return rad * Mathf.Rad2Deg;
+            return rad * Mathf.Rad2Deg + 90;
         }
     }
 }

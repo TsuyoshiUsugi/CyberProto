@@ -14,10 +14,9 @@ namespace Game
         [SerializeField] private float _shotThreshold;
         public ReactiveProperty<bool> IsArrowActive { get; private set; } = new ReactiveProperty<bool>(false);
         private Vector2 _clickedCoodination;
-        private Vector2 _releasedCoodination;
         private Vector2 _mouseScreenPoint;
 
-        public Vector2 CurrentDirection => _releasedCoodination - _clickedCoodination;
+        public Vector2 CurrentDirection => (Vector2)Input.mousePosition - _clickedCoodination;
 
         private void Start()
         {
@@ -29,8 +28,7 @@ namespace Game
                 .Subscribe(_ =>
                 {
                     IsArrowActive.Value = true;
-                    _mouseScreenPoint = Input.mousePosition;
-                    _clickedCoodination = _mouseScreenPoint;
+                    _clickedCoodination = Input.mousePosition;
                 });
 
             // マウスを離したときの処理を購読
@@ -40,18 +38,16 @@ namespace Game
                 .Where(_ => IsArrowActive.Value)
                 .Subscribe(_ =>
                 {
-                    _mouseScreenPoint = Input.mousePosition;
-                    _releasedCoodination = _mouseScreenPoint;
                     if (ExceedingThreshold())
                     {
                         var direction = ConvertBulletDirection(CurrentDirection);
                         _cannon.Fire(direction);
                         Debug.Log(direction);
-                         transform.Translate(direction.x, direction.y, 0);
                     }
                     IsArrowActive.Value = false;
                 });
         }
+
 
         /// <summary>
         /// 引っ張ったベクトルの大きさが閾値を超えているか
