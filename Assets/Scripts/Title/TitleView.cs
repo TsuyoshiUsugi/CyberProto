@@ -21,11 +21,11 @@ namespace Title
         // Start is called before the first frame update
         void Start()
         {
-            _optionObject.SetActive(false);
+            if(_optionObject) _optionObject.SetActive(false);
             _startButton.onClick.AddListener(() => StartButtonClicked.OnNext(Unit.Default));
             _quitButton.onClick.AddListener(() => QuitButtonClicked.OnNext(Unit.Default));
             _optionButton.onClick.AddListener(() => {
-                _optionObject.SetActive(!_isOpen);
+                _optionObject?.SetActive(!_isOpen);
                 _isOpen = !_isOpen;
                 });
         }
