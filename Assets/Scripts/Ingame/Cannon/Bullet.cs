@@ -35,7 +35,8 @@ namespace Game
 
             this.UpdateAsObservable().Subscribe(_ =>
             {
-                transform.Translate(Direction.x, Direction.y, 0);
+                var vec = Direction * Time.deltaTime;
+                transform.Translate(vec.x, vec.y, 0);
             });
             Destroy(gameObject, LifeSpan);
         }

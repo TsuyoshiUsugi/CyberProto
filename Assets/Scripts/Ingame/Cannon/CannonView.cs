@@ -11,10 +11,15 @@ namespace Game
         public bool Active { get; private set; }
         [SerializeField] private SpriteRenderer _arrowRenderer;
         [SerializeField] private SpriteRenderer _cannonRenderer;
+        [SerializeField] private GameObject _lazerObject;
+        private RectTransform _lazerRectTransform;
+        private CanvasGroup _lazerCanvasGroup;
 
         private void Start()
         {
             _arrowRenderer.enabled = false;
+            _lazerRectTransform = _lazerObject.GetComponent<RectTransform>();
+            _lazerCanvasGroup = _lazerObject.GetComponent<CanvasGroup>();
         }
 
         /// <summary>
@@ -26,23 +31,26 @@ namespace Game
             if (active)
             {
                 _arrowRenderer.enabled = true;
+                _lazerCanvasGroup.alpha = 1f;
             }
             else
             {
                 _arrowRenderer.enabled = false;
                 SetCannonDirection(Vector2.down);
+                _lazerCanvasGroup.alpha = 0f;
             }
         }
 
         /// <summary>
-        /// 砲身と矢印の向きとサイズを更新する
+        /// UIを更新する
         /// </summary>
         /// <param name="vector"></param>
 
-        public void SetDirectionAndScale(Vector2 vector)
+        public void SetDirectionUI(Vector2 vector)
         {
             _arrowRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
             _cannonRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
+            _lazerRectTransform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
             var scale = vector.magnitude * 0.001f;
             SetArrowScale(scale);
         }
@@ -74,6 +82,13 @@ namespace Game
         {
             _cannonRenderer.transform.rotation = Quaternion.Euler(0, 0, GetVectorDegree(vector));
         }
+
+        public void DrawLine(Vector2 line)
+        {
+
+        }
+
+
         /// <summary>
         /// vectorをdegreeに変換する
         /// </summary>
