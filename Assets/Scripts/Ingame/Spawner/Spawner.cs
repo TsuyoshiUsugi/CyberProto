@@ -43,7 +43,7 @@ namespace Game
         }
         public void StopSpawn()
         {
-            isSpawnActive = false;
+            isSpawnActive = false; 
         }
 
         void Start()

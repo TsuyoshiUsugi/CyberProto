@@ -29,14 +29,20 @@ namespace Game
             // 大砲に追加可能な材料の候補が変化したとき
             _ingredientSelector.CandidateChanged.Subscribe(ingredients =>
             {
-                _ingredientView.SetActiveIngredients(ingredients);
+                _ingredientView.SetActiveIngredients(ingredients, _ingredientSelector.Selecting);
             }).AddTo(this);
 
+            _ingredientView.SetActiveIngredients(_ingredientSelector.Canditates, _ingredientSelector.Selecting);
 
             // 大砲に素材が追加されるときのアニメーション 
             _Cannon.FoodChanged.Subscribe(ingredients =>
             {
                 _ingredientView.UseIngredients(ingredients);
+            }).AddTo(this);
+
+            _Cannon.Fired.Subscribe(_ => {
+                _ingredientView.ResetIngredientView();
+                _ingredientView.SetActiveIngredients(_ingredientSelector.Canditates, _ingredientSelector.Selecting);
             }).AddTo(this);
         }
     }

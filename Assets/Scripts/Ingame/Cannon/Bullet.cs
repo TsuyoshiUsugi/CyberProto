@@ -10,7 +10,7 @@ namespace Game
 {
     public class Bullet : MonoBehaviour
     {
-        private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
         public Food Food { get; private set; }
         private const float LifeSpan = 10f;
         public Vector2 Direction { get; set; }
@@ -33,7 +33,6 @@ namespace Game
                     }
                 }).AddTo(this);
 
-            _spriteRenderer = GetComponent<SpriteRenderer>();
             this.UpdateAsObservable().Subscribe(_ =>
             {
                 transform.Translate(Direction.x, Direction.y, 0);
@@ -47,6 +46,8 @@ namespace Game
         /// <param name="food"></param>
         public void SetFood(Food food)
         {
+            Debug.Log(food);
+            Debug.Log(food.Icon);
             Food = food;
             _spriteRenderer.sprite = food.Icon;
         }
