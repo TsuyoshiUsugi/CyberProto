@@ -6,33 +6,42 @@ using UnityEngine.UI;
 
 public class FadeIn : MonoBehaviour
 {
-    [SerializeField]
-    private Image _image;
-    [SerializeField]
-    private float _fadeTime = 0.5f;
-    void Start()
-    {
-        StartCoroutine(FadeInCorotine());
+  [SerializeField]
+  private Image _image;
+  [SerializeField]
+  private float _fadeTime = 0.5f;
+  [SerializeField]
+  private Material _transitionIn;
 
-    }
-    IEnumerator FadeInCorotine()
-    {
-        _image.enabled = true;
-        yield return ForAction01(_fadeTime, t => 
-        {
-            _image.color = new Color(0, 0, 0, 1 - t);
-        });
-        _image.enabled = false;
-    }
+  void Start()
+  {
+    StartCoroutine(FadeInCorotine());
 
-    private IEnumerator ForAction01(float second, Action<float> action)
+  }
+  IEnumerator FadeInCorotine()
+  {
+    _image.enabled = true;
+    _image.material = _transitionIn;
+
+    yield return ForAction01(_fadeTime, _transitionIn, t =>
     {
-        float time = 0;
-        while (time < second)
-        {
-            yield return null;
-            time += Time.deltaTime;
-            action(time / second);
-        }
+      _image.color = new Color(0, 0, 0, 1 - t);
+    });
+    _image.enabled = false;
+  }
+
+  private IEnumerator ForAction01(float second, Material material, Action<float> action)
+  {
+    float time = 0;
+    material.SetColor("_Color", _image.color);
+    while (time < second)
+    {
+      material.SetFloat("_Alpha", 1 - time / second);
+
+      yield return new WaitForEndOfFrame();
+      time += Time.deltaTime;
+      //   action(time / second);
     }
+    material.SetFloat("_Alpha", 0);
+  }
 }
