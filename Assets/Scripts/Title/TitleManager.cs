@@ -1,17 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Title
 {
     public class TitleManager : MonoBehaviour
     {
-        [SerializeField] string _stageSelectSceneName = "";
-
         public void MoveToStageSelect()
         {
-            SceneManager.LoadScene(_stageSelectSceneName);
+            ServiceLocator.Instance.Resolve<ISceneTransition>().FadeOut();
         }
 
         public void QuitGame()
