@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 using TMPro;
 
 namespace Game
@@ -14,17 +15,22 @@ namespace Game
         [SerializeField] int _rankBBorder = 70;
 
         [Header("スコアの参照一覧")]
+        [SerializeField] GameObject _resultCanvas;
         [SerializeField] TextMeshProUGUI _scoreText;
         [SerializeField] TextMeshProUGUI _orderCompleteNum;
         [SerializeField] TextMeshProUGUI _popularity;
         [SerializeField] TextMeshProUGUI _resultRank;
+
+        private void Awake()
+        {
+            ServiceLocator.Instance.Resolve<IGameDirector>().State.Where(state => state == GameState.End).Subscribe(_ => ShowResult());
+        }
 
         // Start is called before the first frame update
         void Start()
         {
             _replay.onClick.AddListener(() => Replay());
             _stageSelect.onClick.AddListener(() => ReturnToSceneSelect());
-            ShowResult();
         }
 
         /// <summary>
@@ -37,6 +43,7 @@ namespace Game
         /// </summary>
         public void ShowResult()
         {
+            _resultCanvas.SetActive(true);
             _scoreText.text = $"{_resultContext._score} G";
             _orderCompleteNum.text = $"料理を提供出来た数 {_resultContext._orderCompleteNum} 人";
             _popularity.text = $"評判 {_resultContext._populality:F1}";
