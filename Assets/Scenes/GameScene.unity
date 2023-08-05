@@ -5592,6 +5592,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5405380768511285770, guid: ef1fe954e60db634badca0f8192c7b55, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6082044050042462930, guid: ef1fe954e60db634badca0f8192c7b55, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -5761,7 +5765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameContext: {fileID: 11400000, guid: 0b5cebdefa184b0478ca942199fd84ce, type: 2}
-  _spawnPoint: {x: -9.5, y: 4}
+  _spawnPoint: {x: -9.5, y: 3.2}
   _popularityManager: {fileID: 1766365767}
   timerScaleDiff: 0.1
 --- !u!1001 &2043746395
