@@ -18,6 +18,9 @@ namespace Game
         public IReadOnlyReactiveProperty<int> Score => _score;
         private readonly IntReactiveProperty _score = new IntReactiveProperty(0);
 
+        private IntReactiveProperty _provideCompletedCount = new IntReactiveProperty(0);
+        public ReactiveProperty<int> ProvideCompletedCount => _provideCompletedCount;
+
         void Start()
         {
             var spawner = ServiceLocator.Instance.Resolve<ISpawner>();
@@ -52,6 +55,7 @@ namespace Game
                 .Subscribe(_ =>
                 {
                     _score.Value += _scoreSettings.CompleteBonus;
+                    _provideCompletedCount.Value++;
                 })
                 .AddTo(this);
         }
